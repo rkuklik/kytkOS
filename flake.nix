@@ -2,10 +2,7 @@
   description = "kytkOS";
 
   outputs = {nixpkgs, ...} @ inputs: let
-    bootstrap = import ./lib/fs.nix nixpkgs.lib;
-    flowerModule = entity: {
-      name = entity.base;
-      value = import entity.path nixpkgs.lib;
+    flower = import ./lib.nix nixpkgs.lib;
     };
     flower =
       builtins.listToAttrs

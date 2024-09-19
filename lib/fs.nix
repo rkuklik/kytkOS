@@ -111,6 +111,8 @@ lib: let
   transformers = {
     paths = map (entity: entity.path);
   };
+
+  include = path: transformers.paths (filters.nix (treeList path));
 in {
   inherit
     directory
