@@ -7,6 +7,7 @@
   inherit
     (lib)
     listToAttrs
+    mkDefault
     mkOption
     ;
 
@@ -16,6 +17,10 @@
 in {
   options.system.nixos = listToAttrs (map writeable options);
   config = {
+    programs = {
+      git.enable = true;
+      nh.enable = mkDefault true;
+    };
     system = {
       stateVersion = "24.11";
       nixos = {
