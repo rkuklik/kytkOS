@@ -1,6 +1,7 @@
 {
-  lib,
   config,
+  lib,
+  flower,
   ...
 }: let
   inherit
@@ -11,17 +12,17 @@
     mkMerge
     mkOption
     mkEnableOption
+    mkIf
     ;
 
-  userOptions = {
-    options = {
-      name = mkOption {
-        type = types.passwdEntry types.str;
-        description = "User's full name";
-      };
-      admin = mkEnableOption "Give user administrator priviledges";
-      net = mkEnableOption "Allow user to change network configuration";
+  userOptions.options = {
+    name = mkOption {
+      type = types.passwdEntry types.str;
+      description = "User's full name";
     };
+    admin = mkEnableOption "Give user administrator priviledges";
+    net = mkEnableOption "Allow user to change network configuration";
+    home-manager = mkEnableOption "Manage home with home-manager";
   };
 
   cfg = config.kytkos.users;
@@ -39,6 +40,11 @@
         ++ optional conf.net "networkmanager";
     };
   };
+  homeuser = name: {
+    ${name} = mkIf cfg.${name}.home-manager {
+      imports = flower.fs.include ../../users/${name};
+    };
+  };
 
   merger = f: mkMerge (map f users);
 in {
@@ -49,5 +55,6 @@ in {
 
   config = {
     users.users = merger nixuser;
+    home-manager.users = merger homeuser;
   };
 }
