@@ -7,6 +7,7 @@
     };
     boot = {
       loader = "grub";
+      mode = "bios";
       memtest = true;
     };
   };

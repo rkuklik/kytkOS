@@ -16,9 +16,19 @@ in {
       description = "Which bootloader to user";
       type = types.enum ["grub" "systemd-boot"];
     };
+    mode = mkOption {
+      description = "Type of firmware";
+      type = types.enum ["uefi" "bios"];
+    };
     memtest = mkEnableOption "Memory testing";
   };
 
+  config.assertions = [
+    {
+      assertion = (cfg.loader == "systemd-boot") -> (cfg.mode == "uefi");
+      message = "systemd-boot only runs in uefi mode";
+    }
+  ];
   config.boot = {
     initrd.systemd.enable = true;
     loader = {
@@ -26,7 +36,7 @@ in {
         enable = cfg.loader == "grub";
         useOSProber = true;
         enableCryptodisk = true;
-        efiSupport = true;
+        efiSupport = cfg.mode == "uefi";
         memtest86.enable = cfg.memtest;
       };
       systemd-boot = {
