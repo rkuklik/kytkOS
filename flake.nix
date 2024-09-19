@@ -33,6 +33,7 @@
         ++ include ./hosts/${hostname};
       specialArgs = {
         inherit
+          hostname
           inputs
           system
           ;

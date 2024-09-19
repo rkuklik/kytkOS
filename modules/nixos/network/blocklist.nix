@@ -29,7 +29,7 @@ in {
       block =
         concatMap
         (name:
-          if cfg.blacklist."${name}"
+          if cfg.${name}
           then [name]
           else [])
         [
