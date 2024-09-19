@@ -3,17 +3,55 @@
 
   outputs = {nixpkgs, ...} @ inputs: let
     flower = import ./lib.nix nixpkgs.lib;
+
+    inherit (flower.fs) include;
+
+    hosts = let
+      inherit (flower.os.systems) linux;
+    in {
+      nixos = {
+        vm = linux.x86_64;
+      };
     };
-    flower =
-      builtins.listToAttrs
-      (
-        builtins.map
-        flowerModule
-        (bootstrap.filters.nix (bootstrap.treeList ./lib))
-      );
+
+    platforms = {
+      nixos = {
+        name = "nixos";
+        builder = nixpkgs.lib.nixosSystem;
+        sharedModules = [];
+      };
+    };
+
+    osbuilder = {
+      name,
+      builder,
+      sharedModules,
+    }: hostname: system: let
+      modules =
+        sharedModules
+        ++ include ./modules/${name}
+        ++ include ./hosts/${hostname};
+      specialArgs = {
+        inherit
+          inputs
+          system
+          ;
+      };
+    in
+      builder {
+        inherit
+          modules
+          specialArgs
+          ;
+      };
+
+    configurations = name:
+      builtins.mapAttrs
+      (osbuilder platforms.${name})
+      hosts.${name};
   in {
     inherit flower;
-    nixosConfigurations = {};
+    nixosConfigurations = configurations "nixos";
   };
 
   inputs = {
