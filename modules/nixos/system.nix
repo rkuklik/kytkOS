@@ -1,6 +1,7 @@
 {
   lib,
   system,
+  hostname,
   ...
 }: let
   inherit
@@ -36,5 +37,6 @@ in {
         auto-optimise-store = true;
       };
     };
+    networking.hostName = hostname;
   };
 }
