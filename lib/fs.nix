@@ -120,6 +120,7 @@ in {
     file
     filetype
     filters
+    include
     symlink
     transformers
     tree
