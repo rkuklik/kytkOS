@@ -1,7 +1,11 @@
 {
   description = "kytkOS";
 
-  outputs = {nixpkgs, ...} @ inputs: let
+  outputs = {
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
     flower = import ./lib.nix nixpkgs.lib;
 
     inherit (flower.fs) include;
@@ -18,7 +22,9 @@
       nixos = {
         name = "nixos";
         builder = nixpkgs.lib.nixosSystem;
-        sharedModules = [];
+        sharedModules = [
+          home-manager.nixosModules.home-manager
+        ];
       };
     };
 
@@ -36,6 +42,7 @@
           hostname
           inputs
           system
+          flower
           ;
       };
     in
@@ -57,5 +64,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
