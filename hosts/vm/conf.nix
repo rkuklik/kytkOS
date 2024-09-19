@@ -5,5 +5,9 @@
       admin = true;
       net = true;
     };
+    boot = {
+      loader = "grub";
+      memtest = true;
+    };
   };
 }
