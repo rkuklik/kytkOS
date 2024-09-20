@@ -1,8 +1,15 @@
 {
   programs.nixvim.plugins.lint = {
     enable = true;
-    autoCmd.callback.__raw =
-      # lua
-      "require('lint').try_lint(nil, { ignore_errors = true })";
+    autoCmd = {
+      event = ["BufWritePost" "BufReadPost" "InsertLeave"];
+      callback.__raw =
+        # lua
+        ''
+          function()
+            require('lint').try_lint(nil, { ignore_errors = true })
+          end
+        '';
+    };
   };
 }
