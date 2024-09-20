@@ -77,5 +77,13 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 }
