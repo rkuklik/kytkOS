@@ -7,7 +7,7 @@
   opts = options.kytkos.login;
   cfg = config.kytkos.login;
   providers = lib.attrNames opts;
-  enabled = name: cfg.${name}.enabled or false;
+  enabled = name: cfg.${name}.enable or false;
   toInt = bool:
     if bool
     then 1
@@ -17,7 +17,10 @@ in {
   config.assertions = [
     {
       assertion = count != 0 -> count == 1;
-      message = "At most one login manager can be enabled";
+      message = let
+        spaced = lib.concatStringsSep " ";
+        names = lib.filter enabled providers;
+      in "At most one login manager can be enabled. Current: [${spaced names}]";
     }
   ];
 }
