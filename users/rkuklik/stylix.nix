@@ -44,12 +44,18 @@ in {
         then cfg.image
         else "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Patak/contents/images_dark/3840x2160.png";
       fonts = {
+        sansSerif = {
+          package = pkgs.noto-fonts;
+          name = "Noto Sans";
+        };
         monospace = {
           package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
           name = "JetbrainsMono Nerd Font";
         };
         sizes = {
           terminal = 14;
+          desktop = 10;
+          applications = 10;
         };
       };
       opacity = {
