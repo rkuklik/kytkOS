@@ -42,6 +42,5 @@ in {
         auto-optimise-store = true;
       };
     };
-    networking.hostName = hostname;
   };
 }
