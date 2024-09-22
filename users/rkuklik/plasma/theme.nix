@@ -4,7 +4,9 @@
   lib,
   ...
 }: let
-  id = "me.danth.stylix";
+  name = "plasmaflower";
+  pretty = "Plasma Flower";
+  id = "cz.kytkos.${name}";
   stylecfg = config.stylix;
   fonts = stylecfg.fonts;
 
@@ -39,8 +41,7 @@
   formatConfig = data:
     lib.concatStringsSep "\n" (formatLines [] data);
 
-  customColors =
-    config.lib.stylix.colors;
+  customColors = config.lib.stylix.colors;
 
   # PascalCase is the standard naming for color scheme files. Schemes named
   # in kebab-case will load when selected manually, but don't work with a
@@ -113,14 +114,22 @@
   wallpaperMetadata = {
     KPlugin = {
       Id = id;
-      Name = "Stylix";
+      Name = pretty;
     };
+  };
+
+  # HACK: lookAndFeelDefaults didn't set this
+  kwinrc."org.kde.kdecoration2" = {
+    library = "arstotzka";
+    theme = "Arstotzka";
+    BorderSize = "Tiny";
+    BorderSizeAuto = false;
   };
 
   lookAndFeelMetadata = {
     KPlugin = {
       Id = id;
-      Name = "Stylix";
+      Name = pretty;
       Description = "Generated from your Home Manager configuration";
       ServiceTypes = ["Plasma/LookAndFeel"];
       Website = "https://github.com/danth/stylix";
@@ -129,9 +138,8 @@
   };
 
   lookAndFeelDefaults = {
-    kwinrc."org.kde.kdecoration2".library = "org.kde.breeze";
+    inherit kwinrc;
     plasmarc.Theme.name = "default";
-
     kdeglobals = {
       KDE.widgetStyle = "Breeze";
       General.ColorScheme = colorschemeSlug;
@@ -144,7 +152,7 @@
   # Contains a wallpaper package, a colorscheme file, and a look and feel
   # package which depends on both.
   themePackage =
-    pkgs.runCommandLocal "stylix-kde-theme" {
+    pkgs.runCommandLocal "kde-theme" {
       colorscheme = formatConfig colorscheme;
       wallpaperMetadata = builtins.toJSON wallpaperMetadata;
       wallpaperImage = stylecfg.image;
@@ -158,8 +166,8 @@
 
       PATH="${pkgs.imagemagick}/bin:$PATH"
 
-      wallpaper="$out/share/wallpapers/stylix"
-      look_and_feel="$out/share/plasma/look-and-feel/stylix"
+      wallpaper="$out/share/wallpapers/${name}"
+      look_and_feel="$out/share/plasma/look-and-feel/${name}"
 
       mkdir --parents "$wallpaper/contents/images"
 
@@ -181,10 +189,10 @@
     '';
 in {
   config = {
-    home.packages = [themePackage];
+    home.packages = [themePackage pkgs.arstotzka];
     programs.plasma = {
       workspace = {
-        lookAndFeel = "me.danth.stylix";
+        lookAndFeel = id;
         colorScheme = colorschemeSlug;
         cursor = {
           theme = stylecfg.cursor.name;
@@ -216,6 +224,7 @@ in {
           immutable = true;
           value = false;
         };
+        inherit kwinrc;
       };
     };
   };
