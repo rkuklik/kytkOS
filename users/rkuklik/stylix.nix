@@ -58,6 +58,11 @@ in {
           applications = 10;
         };
       };
+      cursor = {
+        package = pkgs.kdePackages.breeze;
+        name = "breeze_cursors";
+        size = 24;
+      };
       opacity = {
         terminal = 0.8;
       };
