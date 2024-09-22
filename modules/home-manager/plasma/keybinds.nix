@@ -1,5 +1,6 @@
 {
   config,
+  options,
   lib,
   ...
 }: let
@@ -13,100 +14,77 @@
     isAttrs
     isList
     listToAttrs
-    mkMerge
+    mapAttrs
     mkOption
-    mkOptionType
     removeAttrs
     types
     ;
+  opts = options.flowerbed.plasma.keybinds;
   cfg = config.flowerbed.plasma.keybinds;
-  keybinds = attrValues cfg;
+  groupNames = attrNames cfg;
 
-  fullKeybind.options = {
-    keys = mkOption {
-      type = types.listOf types.str;
-      default = "";
-    };
-    default = mkOption {
-      type = types.str;
-      default = "";
-    };
-    description = mkOption {
-      type = types.str;
-    };
-  };
-  plasmaKeybind = mkOptionType {
-    name = "plasmaKeybind";
-    merge = loc: defs: let
-      converter = {
-        value,
-        file,
-      }: {
-        inherit file;
-        value =
-          if isAttrs value
-          then value
-          else {
-            keybinds =
-              if isList value
-              then value
-              else [value];
-          };
-      };
-    in
-      (types.submodule fullKeybind).merge loc (map converter defs);
-  };
-
-  keybindGroupOpts.options = mkOption {
-    type = types.attrsOf plasmaKeybind;
-  };
-  keybindGroupDef.options = {
-    name = mkOption {
-      description = "System name";
-      type = types.str;
-    };
-    description = mkOption {
-      description = "Friendly description";
-      type = types.str;
-    };
-  };
-
-  bind = {
-    name,
-    keys,
-    default,
+  escaper = escape ["," "\\"];
+  mkKeybind = {
+    command,
     description,
-  }: let
-    escaper = escape ["," "\\"];
-  in {
-    inherit name;
+    default ? "",
+  }: keys: {
+    name = command;
     value = concatStringsSep "," [
       (concatStringsSep "\t" (map escaper keys))
       (escaper default)
       (escaper description)
     ];
   };
-  mkKeybindGroup = {
-    name,
-    description,
-  } @ set: let
-    binds = attrValues (removeAttrs filtered (attrNames keybindGroupDef.options));
-    filtered = filter (binding: binding.keys != []) binds;
-    transformed = map bind filtered;
+  mkKeybindGroup = name: let
+    definition = mappings.${name};
+    group = cfg.${name};
+    optionNames = attrNames group;
+    keybinds = map (option: mkKeybind definition.${option} group.${option}) optionNames;
   in {
-    inherit name;
+    name = definition.name;
     value =
       {
-        _k_friendly_name = description;
+        _k_friendly_name = definition.description;
       }
-      // listToAttrs transformed;
-  };
-in {
-  options.flowerbed.plasma.keybinds = mkOption {
-    description = "Plasma keybindings";
-    type = types.attrsOf (types.submodule [keybindGroupDef keybindGroupOpts]);
-    default = {};
+      // listToAttrs keybinds;
   };
 
-  config.programs.plasma.configFile.kglobalshortcutsrc = mkMerge (map mkKeybindGroup keybinds);
+  shortcuts = listToAttrs (map mkKeybindGroup groupNames);
+
+  mappings = {
+    kwin = {
+      name = "kwin";
+      description = "KWin";
+      fullscreen = {
+        command = "Window Fullscreen";
+        description = "Make Window Fullscreen";
+      };
+      close = {
+        command = "Window Close";
+        description = "Close Window";
+        default = "Alt+F4";
+      };
+    };
+  };
+
+  keybindOpt = mkOption {
+    description = "Keybind or list of keybinds";
+    type = types.nullOr (types.oneOf [types.str (types.listOf types.str)]);
+    apply = thing:
+      if thing == null
+      then ["none"]
+      else if isList thing
+      then thing
+      else [thing];
+  };
+in {
+  options.flowerbed.plasma.keybinds = {
+    kwin = {
+      fullscreen = keybindOpt;
+      close = keybindOpt;
+    };
+  };
+
+  config.programs.plasma.configFile.kglobalshortcutsrc = shortcuts;
 }
