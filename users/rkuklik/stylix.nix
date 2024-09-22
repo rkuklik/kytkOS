@@ -14,8 +14,6 @@
     ;
   cfg = config.styling;
 in {
-  imports = [inputs.stylix.homeManagerModules.stylix];
-
   options.styling = {
     enable = mkEnableOption "Custom theming" // {default = true;};
     polarity = mkOption {
