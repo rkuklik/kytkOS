@@ -1,25 +1,20 @@
 {
   config,
-  options,
   lib,
   ...
 }: let
   inherit
     (lib)
     attrNames
-    attrValues
     concatStringsSep
     escape
-    filter
-    isAttrs
+    filterAttrs
     isList
     listToAttrs
     mapAttrs
     mkOption
-    removeAttrs
     types
     ;
-  opts = options.flowerbed.plasma.keybinds;
   cfg = config.flowerbed.plasma.keybinds;
   groupNames = attrNames cfg;
 
@@ -78,13 +73,12 @@
       then thing
       else [thing];
   };
+
+  stripper = name: value: !(name == "name" || name == "description");
+  toOption = set: mapAttrs (_: _: keybindOpt) (filterAttrs stripper set);
+  opts = mapAttrs (_: toOption) mappings;
 in {
-  options.flowerbed.plasma.keybinds = {
-    kwin = {
-      fullscreen = keybindOpt;
-      close = keybindOpt;
-    };
-  };
+  options.flowerbed.plasma.keybinds = opts;
 
   config.programs.plasma.configFile.kglobalshortcutsrc = shortcuts;
 }
