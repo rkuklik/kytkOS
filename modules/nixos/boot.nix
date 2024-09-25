@@ -1,10 +1,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit
     (lib)
+    mkDefault
     mkEnableOption
     mkOption
     types
@@ -37,6 +39,8 @@ in {
         useOSProber = true;
         enableCryptodisk = true;
         efiSupport = cfg.mode == "uefi";
+        gfxmodeBios = mkDefault "auto";
+        gfxmodeEfi = mkDefault "auto";
         memtest86.enable = cfg.memtest;
       };
       systemd-boot = {

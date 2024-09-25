@@ -22,7 +22,13 @@
     };
     admin = mkEnableOption "Give user administrator priviledges";
     net = mkEnableOption "Allow user to change network configuration";
-    home-manager = mkEnableOption "Manage home with home-manager";
+    home-manager = {
+      enable = mkEnableOption "Manage home with home-manager";
+      settings = mkOption {
+        description = "Config options to pass in";
+        type = types.anything;
+      };
+    };
   };
 
   cfg = config.kytkos.users;
@@ -40,10 +46,15 @@
         ++ optional conf.net "networkmanager";
     };
   };
-  homeuser = name: {
-    ${name} = mkIf cfg.${name}.home-manager {
-      imports = flower.fs.include ../../users/${name};
-    };
+  homeuser = name: let
+    conf = cfg.${name}.home-manager;
+  in {
+    ${name} = mkIf conf.enable (
+      mkMerge [
+        {imports = flower.fs.include ../../users/${name};}
+        conf.settings
+      ]
+    );
   };
 
   merger = f: mkMerge (map f users);
