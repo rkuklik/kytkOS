@@ -35,6 +35,7 @@ in {
           period = 1;
         };
       };
+      web-devicons.enable = true;
       nvim-colorizer = {
         enable = true;
         fileTypes = ["*"];
