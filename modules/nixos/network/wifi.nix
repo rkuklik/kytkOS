@@ -1,21 +1,18 @@
 {
-  config,
+  flower,
   lib,
   ...
 }: let
-  cfg = config.kytkos.net.wifi;
-  inherit
-    (lib)
-    mkIf
-    mkEnableOption
-    ;
-in {
-  options.kytkos.net.wifi = {
-    enable = mkEnableOption "Wi-Fi";
+  mapper = entity: {
+    name = entity.base;
+    value = import entity.path;
   };
-
-  config.networking.networkmanager = mkIf cfg.enable {
+  files = flower.fs.treeList ../../../data/networkmanager;
+  profiles = map mapper files;
+in {
+  networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
+    ensureProfiles.profiles = lib.listToAttrs profiles;
   };
 }
