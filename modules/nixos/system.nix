@@ -1,7 +1,6 @@
 {
   lib,
   system,
-  hostname,
   ...
 }: let
   inherit
@@ -41,6 +40,7 @@ in {
         experimental-features = ["nix-command" "flakes"];
         auto-optimise-store = true;
       };
+      channel.enable = false;
     };
   };
 }

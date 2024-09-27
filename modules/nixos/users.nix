@@ -13,6 +13,8 @@
     mkOption
     mkEnableOption
     mkIf
+    pathExists
+    readFile
     ;
 
   userOptions.options = {
@@ -36,10 +38,12 @@
 
   nixuser = name: let
     conf = cfg.${name};
+    pass = ../../data/passwords/${name}.nix;
   in {
     ${name} = {
       isNormalUser = true;
       description = conf.name;
+      hashedPassword = mkIf (pathExists pass) (import pass);
       extraGroups =
         []
         ++ optional conf.admin "wheel"
@@ -65,7 +69,10 @@ in {
   };
 
   config = {
-    users.users = merger nixuser;
+    users = {
+      mutableUsers = false;
+      users = merger nixuser;
+    };
     home-manager.users = merger homeuser;
   };
 }
