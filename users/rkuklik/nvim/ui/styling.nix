@@ -1,4 +1,4 @@
-let
+{config, ...}: let
   inherit
     (builtins)
     map
@@ -16,17 +16,42 @@ let
     };
   };
 in {
+  stylix.targets.nixvim.enable = false;
   programs.nixvim = {
     highlight = listToAttrs (
       map
       transparent
-      ["Normal" "NormalNC" "NormalSB" "NonText" "SignColumn"]
+      [
+        "Normal"
+        "NormalNC"
+        "NormalFloat"
+        "Pmenu"
+        "StatusLine"
+        "StatusLineNC"
+        "TabLineFill"
+        "WinSeparator"
+        "NonText"
+        "SignColumn"
+        "VertSplit"
+        "Folded"
+      ]
     );
     highlightOverride = listToAttrs (
       map
       diagnostic
       ["Error" "Warn" "Info" "Hint"]
     );
+    colorschemes.catppuccin = {
+      enable = true;
+      settings = {
+        flavour = "mocha";
+        transparent_background = true;
+        term_colors = true;
+        integrations = {
+          fidget = true;
+        };
+      };
+    };
     plugins = {
       fidget = {
         enable = true;
