@@ -206,5 +206,328 @@ in {
       };
       tab.home_page = "home";
     };
+    mimetype = {
+      class = {
+        audio_default = [
+          {
+            command = "mpv";
+            args = ["--"];
+          }
+          {
+            command = "mediainfo";
+            pager = true;
+          }
+        ];
+        image_default = [
+          {
+            command = "qimgv";
+            args = ["--"];
+            fork = true;
+            silent = true;
+          }
+          {
+            command = "krita";
+            args = ["--"];
+            fork = true;
+            silent = true;
+          }
+          {
+            command = "exiftool";
+            pager = true;
+          }
+          {
+            command = "swappy";
+            args = ["-f"];
+            fork = true;
+          }
+        ];
+        vector_default = [
+          {
+            command = "inkview";
+            fork = true;
+            silent = true;
+          }
+          {
+            command = "inkscape";
+            fork = true;
+            silent = true;
+          }
+        ];
+        video_default = [
+          {
+            command = "mpv";
+            args = ["--"];
+            fork = true;
+            silent = true;
+          }
+          {
+            command = "mediainfo";
+            pager = true;
+          }
+          {
+            command = "mpv";
+            args = ["--mute" "on" "--"];
+            fork = true;
+            silent = true;
+          }
+        ];
+        text_default = [
+          {
+            command = "nvim";
+          }
+          {
+            command = "bat";
+            args = ["--paging=always"];
+          }
+        ];
+        reader_default = [
+          {
+            command = "evince";
+            fork = true;
+            silent = true;
+          }
+        ];
+        libreoffice_default = [
+          {
+            command = "libreoffice";
+            fork = true;
+            silent = true;
+          }
+        ];
+      };
+      extension = let
+        archives = {
+          "7z" = {
+            command = "7z";
+            args = ["x"];
+          };
+          bz2 = {
+            command = "tar";
+            args = ["-xvjf"];
+          };
+          gz = {
+            command = "tar";
+            args = ["-xvzf"];
+          };
+          tar = {
+            command = "tar";
+            args = ["-xvf"];
+          };
+          tgz = {
+            command = "tar";
+            args = ["-xvzf"];
+          };
+          rar = {
+            command = "unrar";
+            args = ["x"];
+          };
+          xz = {
+            command = "tar";
+            args = ["-xvJf"];
+          };
+          zip = {command = "unzip";};
+          zst = {
+            command = "zstd";
+            args = ["-d"];
+          };
+        };
+        inheritor = default: name: {
+          name = name;
+          value."inherit" = default;
+        };
+        image = inheritor "image_default";
+        vector = inheritor "vector_default";
+        audio = inheritor "audio_default";
+        video = inheritor "video_default";
+        text = inheritor "text_default";
+        office = inheritor "libreoffice_default";
+        reader = inheritor "reader_default";
+        archive = name: {
+          inherit name;
+          value.app_list = [
+            {
+              command = "file-roller";
+              fork = true;
+              silent = true;
+            }
+            archives.${name}
+          ];
+        };
+        inherit
+          (lib)
+          attrNames
+          flatten
+          listToAttrs
+          ;
+      in
+        listToAttrs (flatten [
+          ## image formats
+          (map image [
+            "avif"
+            "bmp"
+            "gif"
+            "heic"
+            "jpeg"
+            "jpe"
+            "jpg"
+            "jxl"
+            "pgm"
+            "png"
+            "ppm"
+            "tiff"
+            "webp"
+          ])
+
+          (map vector ["svg"])
+
+          ## audio formats
+          (map audio [
+            "aac"
+            "ac3"
+            "aiff"
+            "ape"
+            "dts"
+            "flac"
+            "m4a"
+            "mp3"
+            "oga"
+            "ogg"
+            "opus"
+            "wav"
+            "wv"
+          ])
+
+          ## video formats
+          (map video [
+            "avi"
+            "av1"
+            "flv"
+            "mkv"
+            "m4v"
+            "mov"
+            "mp4"
+            "ts"
+            "webm"
+            "wmv"
+          ])
+
+          ## text formats
+          (map text [
+            "build"
+            "c"
+            "cmake"
+            "conf"
+            "cpp"
+            "css"
+            "csv"
+            "cu"
+            "ebuild"
+            "eex"
+            "env"
+            "ex"
+            "exs"
+            "go"
+            "h"
+            "hpp"
+            "hs"
+            "html"
+            "ini"
+            "java"
+            "js"
+            "json"
+            "kt"
+            "lua"
+            "log"
+            "m3u"
+            "md"
+            "micro"
+            "ninja"
+            "norg"
+            "org"
+            "py"
+            "rkt"
+            "rs"
+            "scss"
+            "sh"
+            "srt"
+            "svelte"
+            "tex"
+            "toml"
+            "tsx"
+            "txt"
+            "vim"
+            "xml"
+            "yaml"
+            "yml"
+          ])
+
+          # archive formats
+          (map archive (attrNames archives))
+
+          # misc formats
+          {
+            name = "aup";
+            value.app_list = [
+              {
+                command = "audacity";
+                fork = true;
+                silent = true;
+              }
+            ];
+          }
+          {
+            name = "kra";
+            value.app_list = [
+              {
+                command = "krita";
+                fork = true;
+                silent = true;
+              }
+            ];
+          }
+          {
+            name = "kdenlive";
+            value.app_list = [
+              {
+                command = "kdenlive";
+                fork = true;
+                silent = true;
+              }
+            ];
+          }
+          {
+            name = "torrent";
+            value.app_list = [
+              {command = "transmission-gtk";}
+            ];
+          }
+
+          (map office [
+            "odt"
+            "odf"
+            "ods"
+            "odp"
+            "doc"
+            "docx"
+            "xls"
+            "xlsx"
+            "ppt"
+            "pptx"
+          ])
+
+          (map reader ["pdf"])
+
+          # application/octet-stream
+          {
+            name = "mimetype";
+            value = {
+              application.subtype.octet-stream."inherit" = "video_default";
+              application.video."inherit" = "video_default";
+              application.text."inherit" = "text_default";
+            };
+          }
+        ]);
+    };
   };
+  xdg.configFile."joshuto/icons.toml".source = ./joshuto-icons.toml;
 }
