@@ -49,17 +49,23 @@
         zstyle ':completion:*' cache-path ~/.zsh/cache
 
         ## keybindings section
-        bindkey -e
-        bindkey '^[[7~' beginning-of-line                               # home key
-        bindkey '^[[h' beginning-of-line                                # home key
+        bindkey '\e[1~' beginning-of-line            # Home
+        bindkey '\e[7~' beginning-of-line            # Home
+        bindkey '\e[H'  beginning-of-line            # Home
+        bindkey '\eOH'  beginning-of-line            # Home
+
+        bindkey '\e[4~' end-of-line                  # End
+        bindkey '\e[8~' end-of-line                  # End
+        bindkey '\e[F ' end-of-line                  # End
+        bindkey '\eOF'  end-of-line                  # End
+
         if [[ "''${terminfo[khome]}" != "" ]]; then
-          bindkey "''${terminfo[khome]}" beginning-of-line                # [home] - go to beginning of line
+          bindkey "''${terminfo[khome]}" beginning-of-line
         fi
-        bindkey '^[[8~' end-of-line                                     # end key
-        bindkey '^[[f' end-of-line                                     # end key
         if [[ "''${terminfo[kend]}" != "" ]]; then
           bindkey "''${terminfo[kend]}" end-of-line                       # [end] - go to end of line
         fi
+
         bindkey '^[[2~' overwrite-mode                                  # insert key
         bindkey '^[[3~' delete-char                                     # delete key
         bindkey '^[[c'  forward-char                                    # right key
@@ -68,10 +74,14 @@
         bindkey '^[[6~' history-beginning-search-forward                # page down key
 
         # navigate words with ctrl+arrow keys
-        bindkey '^[oc' forward-word                                     #
-        bindkey '^[od' backward-word                                    #
-        bindkey '^[[1;5d' backward-word                                 #
-        bindkey '^[[1;5c' forward-word                                  #
+        bindkey '^[[1;5C' forward-word               # C-Right
+        bindkey '^[0c'    forward-word               # C-Right
+        bindkey '^[[5C'   forward-word               # C-Right
+
+        bindkey '^[[1;5D' backward-word              # C-Left
+        bindkey '^[0d'    backward-word              # C-Left
+        bindkey '^[[5D'   backward-word              # C-Left
+
         bindkey '^h' backward-kill-word                                 # delete previous word with ctrl+backspace
         bindkey '^[[z' undo                                             # shift+tab undo last action
       '';
