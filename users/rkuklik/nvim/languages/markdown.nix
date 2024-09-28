@@ -1,6 +1,6 @@
 {
-  lib,
   pkgs,
+  lib,
   ...
 }: {
   programs.nixvim.plugins = {
@@ -11,7 +11,10 @@
       formatters_by_ft.markdown = {
         __unkeyed-prettierd = "prettierd";
       };
-      formatters.prettierd.command = lib.getExe pkgs.prettierd;
+    };
+    lint = {
+      lintersByFt.markdown = ["markdownlint"];
+      linters.markdownlint.cmd = lib.getExe pkgs.markdownlint-cli;
     };
   };
 }

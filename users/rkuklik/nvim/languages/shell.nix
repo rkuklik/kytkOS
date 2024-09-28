@@ -24,9 +24,22 @@ in {
       enable = true;
     };
     conform-nvim.settings = {
-      formatters_by_ft.sh = shellfmt;
-      formatters_by_ft.bash = shellfmt;
+      formatters_by_ft = {
+        sh = shellfmt;
+        bash = shellfmt;
+      };
       formatters = listToAttrs (map packager (attrValues shellfmt));
+    };
+    lint = {
+      lintersByFt = {
+        sh = ["shellcheck"];
+        bash = ["shellcheck"];
+        fish = ["fish"];
+      };
+      linters = {
+        shellcheck.cmd = lib.getExe pkgs.shellcheck;
+        fish.cmd = lib.getExe' pkgs.fish "fish";
+      };
     };
   };
 }

@@ -9,7 +9,9 @@ in {
     lsp.servers.tailwindcss = {
       enable = true;
       filetypes = ["rust"];
-      settings = {userLanguages.rust = "html";};
+      settings = {
+        userLanguages.rust = "html";
+      };
     };
     conform-nvim.settings = {
       formatters_by_ft = {
