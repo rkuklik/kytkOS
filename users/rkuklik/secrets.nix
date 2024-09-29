@@ -20,9 +20,9 @@ in {
       "ssh/expect-it/bigdata"
       "ssh/expect-it/gitlab"
       "ssh/rkuklik/github"
-      "vpn/expect-it/key"
-      "vpn/expect-it/user"
-      "vpn/expect-it/ca"
+      "vpn/expect-it/key.pem"
+      "vpn/expect-it/user.pem"
+      "vpn/expect-it/ca.pem"
       "cargo/token"
     ];
   };
