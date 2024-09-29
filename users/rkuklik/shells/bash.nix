@@ -16,6 +16,7 @@
     initExtra =
       # bash
       ''
+        mkdir -p "$(dirname "$HISTFILE")"
         # ex - archive extractor
         # usage: ex <file>
         ex() {
