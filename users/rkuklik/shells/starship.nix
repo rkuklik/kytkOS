@@ -18,6 +18,8 @@
     jobs = {
       symbol = "s";
       format = "with [$number job$symbol]($style) ";
+      number_threshold = 1;
+      symbol_threshold = 2;
     };
     username = {
       show_always = true;

@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   lib,
   flower,
   ...
@@ -13,8 +14,6 @@
     mkOption
     mkEnableOption
     mkIf
-    pathExists
-    readFile
     ;
 
   userOptions.options = {
@@ -24,6 +23,11 @@
     };
     admin = mkEnableOption "Give user administrator priviledges";
     net = mkEnableOption "Allow user to change network configuration";
+    password = mkOption {
+      description = "User's password";
+      type = types.nullOr types.str;
+      default = null;
+    };
     home-manager = {
       enable = mkEnableOption "Manage home with home-manager";
       settings = mkOption {
@@ -38,12 +42,11 @@
 
   nixuser = name: let
     conf = cfg.${name};
-    pass = ../../data/passwords/${name}.nix;
   in {
     ${name} = {
       isNormalUser = true;
       description = conf.name;
-      hashedPassword = mkIf (pathExists pass) (import pass);
+      hashedPassword = mkIf (conf.password != null) (conf.password);
       extraGroups =
         []
         ++ optional conf.admin "wheel"
@@ -71,6 +74,7 @@ in {
   config = {
     users = {
       mutableUsers = false;
+      defaultUserShell = pkgs.zsh;
       users = merger nixuser;
     };
     home-manager.users = merger homeuser;
