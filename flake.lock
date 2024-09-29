@@ -87,6 +87,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1727531434,
+        "narHash": "sha256-b+GBgCWd2N6pkiTkRZaMFOPztPO4IVTaclYPrQl2uLk=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "b709e1cc33fcde71c7db43850a55ebe6449d0959",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -96,11 +116,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1727409802,
-        "narHash": "sha256-bTdztNxJL+dAcQ1yCtXy2upnvPt1FWerbRvzg3quhbU=",
+        "lastModified": 1727603668,
+        "narHash": "sha256-E+D2UpQLqI2MXhtcBNVYuQnOAg6NAPLJIz1Kgl280ls=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "7964499d31675bc17b042f5ba46abe6bc2ea79af",
+        "rev": "589f99a0ce89acdf11c9f30a5175e065ae4340db",
         "type": "gitlab"
       },
       "original": {
@@ -341,6 +361,22 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1727613673,
+        "narHash": "sha256-qqIffTQfxMYo3MKQ9BoY2s2mdKZNnUiksdnxv81js9U=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "f5c239fa9acb27f0a5326ba2949c00fada89ca9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1727348695,
@@ -353,6 +389,22 @@
       "original": {
         "owner": "nixos",
         "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1725762081,
+        "narHash": "sha256-vNv+aJUW5/YurRy1ocfvs4q/48yVESwlC/yHzjkZSP8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dc454045f5b5d814e5862a6d057e7bb5c29edc05",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-24.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -374,11 +426,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1727519958,
-        "narHash": "sha256-racmCXmFrR8r9/IuByadyX6H8TTZZhIo2MguKgIrcmo=",
+        "lastModified": 1727645871,
+        "narHash": "sha256-Os3PAThU5XliKkKa+SHsFyV/EsCHogHcYONmpzb6500=",
         "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "13564727c59831ff36a9d091024fa79aeca86839",
+        "rev": "5f4a4b47597d3b9ac26c41ff4e8da28fa662f200",
         "type": "github"
       },
       "original": {
@@ -434,12 +486,36 @@
     },
     "root": {
       "inputs": {
+        "disko": "disko",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "plasma-manager": "plasma-manager",
+        "sops": "sops",
         "stylix": "stylix"
+      }
+    },
+    "sops": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": "nixpkgs-stable"
+      },
+      "locked": {
+        "lastModified": 1727423009,
+        "narHash": "sha256-+4B/dQm2EnORIk0k2wV3aHGaE0WXTBjColXjj7qWh10=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "127a96f49ddc377be6ba76964411bab11ae27803",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "stylix": {
@@ -463,11 +539,11 @@
         "tinted-tmux": "tinted-tmux"
       },
       "locked": {
-        "lastModified": 1727362643,
-        "narHash": "sha256-Ceiq/aYjRlRBU677lBaemn8ZU2Jpr08Iso6UlBc9nFc=",
+        "lastModified": 1727635018,
+        "narHash": "sha256-WSc/MF4dUeB2UPMznXYv4LeKK/ulD4xsufdN/L5PoL4=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "e3eb7fdf8d129ff3676dfbc84ee1262322ca6fb4",
+        "rev": "0eea8bcb0f9c3c7638e7ee64f98ed9b4ec716830",
         "type": "github"
       },
       "original": {
