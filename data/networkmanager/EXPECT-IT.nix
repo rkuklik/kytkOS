@@ -15,13 +15,13 @@
   proxy = {};
   vpn = {
     auth = "SHA1";
-    ca = "/home/rkuklik/.local/share/nm/expect-it/ca.pem";
-    cert = "/home/rkuklik/.local/share/nm/expect-it/cert.pem";
+    ca = "/home/rkuklik/.config/sops-nix/secrets/vpn/expect-it/ca.pem";
+    cert = "/home/rkuklik/.config/sops-nix/secrets/vpn/expect-it/cert.pem";
     cert-pass-flags = "1";
     connection-type = "password-tls";
     data-ciphers = "AES-256-GCM:AES-128-GCM:AES-256-CBC";
     dev = "tun";
-    key = "/home/rkuklik/.local/share/nm/expect-it/key.pem";
+    key = "/home/rkuklik/.config/sops-nix/secrets/vpn/expect-it/key.pem";
     password-flags = "1";
     remote = "84.42.196.50:10443:tcp";
     remote-cert-tls = "server";
