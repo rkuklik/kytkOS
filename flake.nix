@@ -4,6 +4,7 @@
   outputs = {
     nixpkgs,
     home-manager,
+    nixos-hardware,
     disko,
     ...
   } @ inputs: let
@@ -15,7 +16,13 @@
       inherit (flower.os.systems) linux;
     in {
       nixos = {
-        inspiron = linux.x86_64;
+        inspiron = {
+          hostname = "inspiron";
+          system = linux.x86_64;
+          systemModules = [
+            nixos-hardware.nixosModules.dell-inspiron-5515
+          ];
+        };
       };
     };
 
@@ -34,9 +41,15 @@
       name,
       builder,
       sharedModules,
-    }: hostname: system: let
+    }: {
+      hostname,
+      system,
+      systemModules,
+    }: let
       modules =
-        sharedModules
+        []
+        ++ sharedModules
+        ++ systemModules
         ++ include ./modules/${name}
         ++ include ./hosts/${hostname};
       specialArgs = {
@@ -57,7 +70,7 @@
 
     configurations = name:
       builtins.mapAttrs
-      (osbuilder platforms.${name})
+      (_: osbuilder platforms.${name})
       hosts.${name};
   in {
     inherit flower;
