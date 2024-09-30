@@ -33,6 +33,7 @@
       settings = mkOption {
         description = "Config options to pass in";
         type = types.anything;
+        default = {};
       };
     };
   };
