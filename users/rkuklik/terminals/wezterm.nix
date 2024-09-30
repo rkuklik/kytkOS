@@ -1,10 +1,6 @@
 {
-  config,
-  lib,
-  ...
-}: {
   programs.wezterm = {
-    enable = lib.mkDefault config.flowerbed.terminal.enable;
+    enable = true;
     extraConfig =
       # lua
       ''

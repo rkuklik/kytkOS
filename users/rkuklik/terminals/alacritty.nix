@@ -1,10 +1,6 @@
 {
-  config,
-  lib,
-  ...
-}: {
   programs.alacritty = {
-    enable = lib.mkDefault config.flowerbed.terminal.enable;
+    enable = true;
     settings = {
       font.builtin_box_drawing = true;
       window = {
