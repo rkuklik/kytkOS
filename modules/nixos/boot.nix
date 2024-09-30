@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
   inherit
@@ -9,6 +8,7 @@
     mkDefault
     mkEnableOption
     mkOption
+    mkIf
     types
     ;
   cfg = config.kytkos.boot;
@@ -41,6 +41,7 @@ in {
         efiSupport = cfg.mode == "uefi";
         gfxmodeBios = mkDefault "auto";
         gfxmodeEfi = mkDefault "auto";
+        device = mkIf (cfg.loader == "grub") (mkDefault "nodev");
         memtest86.enable = cfg.memtest;
       };
       systemd-boot = {

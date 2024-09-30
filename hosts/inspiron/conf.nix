@@ -9,7 +9,7 @@
     };
     boot = {
       loader = "grub";
-      mode = "bios";
+      mode = "uefi";
       memtest = true;
     };
     desktop.plasma.enable = true;

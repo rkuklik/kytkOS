@@ -4,6 +4,7 @@
   outputs = {
     nixpkgs,
     home-manager,
+    disko,
     ...
   } @ inputs: let
     flower = import ./lib.nix nixpkgs.lib;
@@ -14,7 +15,7 @@
       inherit (flower.os.systems) linux;
     in {
       nixos = {
-        vm = linux.x86_64;
+        inspiron = linux.x86_64;
       };
     };
 
@@ -24,6 +25,7 @@
         builder = nixpkgs.lib.nixosSystem;
         sharedModules = [
           home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
         ];
       };
     };
