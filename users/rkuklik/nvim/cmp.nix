@@ -26,80 +26,87 @@ let
       end, { "i", "s" })
   '';
 in {
-  programs.nixvim.plugins.cmp = {
-    enable = true;
-    settings = {
-      sources = map named [
-        "nvim_lsp"
-        "luasnip"
-        "buffer"
-        "path"
-        "crates"
-      ];
-      completion.completeopt = "menu,menuone,noinsert,noselect";
-      snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
-      mapping = {
-        "<C-n>" = mapping "select_next_item(${select})";
-        "<C-p>" = mapping "select_prev_item(${select})";
-        "<C-b>" = mapping "scroll_docs(-4)";
-        "<C-f>" = mapping "scroll_docs(4)";
-        "<C-Space>" = mapping "complete()";
-        "<C-e>" = mapping "abort()";
-        "<CR>" = mapping "confirm({ select = true })";
-        "<S-CR>" =
-          mapping
-          # lua
-          ''
-            confirm({
-              behavior = cmp.ConfirmBehavior.Replace,
-              select = true,
-            })
-          '';
-        "<Tab>" =
-          selector
-          # lua
-          ''
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            elseif (${darkarts})() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          '';
-        "<S-Tab>" =
-          selector
-          # lua
-          ''
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          '';
-      };
+  programs.nixvim.plugins = {
+    friendly-snippets.enable = true;
+    luasnip = {
+      enable = true;
+      fromVscode = [{}];
     };
-    cmdline = let
-      search = {
-        mapping.__raw = "cmp.mapping.preset.cmdline()";
-        sources = map named ["buffer"];
-        view.entries = {
-          name = "wildmenu";
-          separator = " | ";
+    cmp = {
+      enable = true;
+      settings = {
+        sources = map named [
+          "nvim_lsp"
+          "luasnip"
+          "buffer"
+          "path"
+          "crates"
+        ];
+        completion.completeopt = "menu,menuone,noinsert,noselect";
+        snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+        mapping = {
+          "<C-n>" = mapping "select_next_item(${select})";
+          "<C-p>" = mapping "select_prev_item(${select})";
+          "<C-b>" = mapping "scroll_docs(-4)";
+          "<C-f>" = mapping "scroll_docs(4)";
+          "<C-Space>" = mapping "complete()";
+          "<C-e>" = mapping "abort()";
+          "<CR>" = mapping "confirm({ select = true })";
+          "<S-CR>" =
+            mapping
+            # lua
+            ''
+              confirm({
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = true,
+              })
+            '';
+          "<Tab>" =
+            selector
+            # lua
+            ''
+              if cmp.visible() then
+                cmp.select_next_item()
+              elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+              elseif (${darkarts})() then
+                cmp.complete()
+              else
+                fallback()
+              end
+            '';
+          "<S-Tab>" =
+            selector
+            # lua
+            ''
+              if cmp.visible() then
+                cmp.select_prev_item()
+              elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+              else
+                fallback()
+              end
+            '';
         };
       };
-      command = {
-        mapping.__raw = "cmp.mapping.preset.cmdline()";
-        sources = map named ["path" "cmdline"];
+      cmdline = let
+        search = {
+          mapping.__raw = "cmp.mapping.preset.cmdline()";
+          sources = map named ["buffer"];
+          view.entries = {
+            name = "wildmenu";
+            separator = " | ";
+          };
+        };
+        command = {
+          mapping.__raw = "cmp.mapping.preset.cmdline()";
+          sources = map named ["path" "cmdline"];
+        };
+      in {
+        "/" = search;
+        "?" = search;
+        ":" = command;
       };
-    in {
-      "/" = search;
-      "?" = search;
-      ":" = command;
     };
   };
 }
