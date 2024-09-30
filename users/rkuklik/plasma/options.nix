@@ -2,9 +2,9 @@
   programs.plasma.configFile = {
     kwalletrc = {
       Wallet = {
+        "Enabled" = false;
         "Close When Idle" = false;
         "Close on Screensaver" = false;
-        "Enabled" = true;
         "First Use" = false;
         "Idle Timeout" = 10;
         "Launch Manager" = true;

@@ -18,7 +18,7 @@
         HidePasswords = false;
         ShowTrayIcon = true;
         MinimizeOnClose = true;
-        MinimizeOnStartup = true;
+        MinimizeOnStartup = false;
         MinimizeToTray = true;
         MonospaceNotes = true;
         ColorPasswords = true;
