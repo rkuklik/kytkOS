@@ -20,6 +20,7 @@
   wifi-security = {
     auth-alg = "open";
     key-mgmt = "wpa-psk";
-    psk-flags = "1";
+    psk = "$env_54fbb0bb_efd4_40d8_901d_f7aa0cd6a717";
+    psk-flags = "0";
   };
 }

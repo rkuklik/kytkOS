@@ -1,4 +1,5 @@
 {
+  config,
   flower,
   lib,
   ...
@@ -10,9 +11,17 @@
   files = flower.fs.treeList ../../../data/networkmanager;
   profiles = map mapper files;
 in {
+  sops.secrets."networkmanager" = {
+    restartUnits = ["NetworkManager-ensure-profiles.service"];
+  };
   networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
-    ensureProfiles.profiles = lib.listToAttrs profiles;
+    ensureProfiles = {
+      environmentFiles = [
+        config.sops.secrets.networkmanager.path
+      ];
+      profiles = lib.listToAttrs profiles;
+    };
   };
 }

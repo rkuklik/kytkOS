@@ -20,8 +20,7 @@
   wifi-security = {
     auth-alg = "open";
     key-mgmt = "wpa-psk";
-    leap-password-flags = "1";
-    psk-flags = "1";
-    wep-key-flags = "1";
+    psk = "$env_1c5fdcf6_bd5e_4da4_9e5b_ebcd8101ca6a";
+    psk-flags = "0";
   };
 }

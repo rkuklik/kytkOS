@@ -17,6 +17,7 @@
   };
   wifi-security = {
     key-mgmt = "wpa-psk";
-    psk-flags = "1";
+    psk = "$env_7283f40a_9a6a_4656_95e2_989961a35647";
+    psk-flags = "0";
   };
 }

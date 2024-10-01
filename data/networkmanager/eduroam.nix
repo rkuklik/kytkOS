@@ -3,7 +3,8 @@
     domain-suffix-match = "cuni.cz";
     eap = "peap;";
     identity = "96388105@cuni.cz";
-    password-flags = "1";
+    password = "$env_a3ab6936_aa8e_47f4_87e5_253b8ca9a17c";
+    password-flags = "0";
     phase2-auth = "mschapv2";
   };
   connection = {

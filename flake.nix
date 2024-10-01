@@ -5,6 +5,7 @@
     nixpkgs,
     home-manager,
     nixos-hardware,
+    sops,
     disko,
     ...
   } @ inputs: let
@@ -32,6 +33,7 @@
         builder = nixpkgs.lib.nixosSystem;
         sharedModules = [
           home-manager.nixosModules.home-manager
+          sops.nixosModules.sops
           disko.nixosModules.disko
         ];
       };
