@@ -44,6 +44,7 @@ in {
     shortcuts.kwin =
       {
         "Window Fullscreen" = "Meta+F";
+        "Window Maximize" = "Meta+Shift+F";
         "Window Close" = "Meta+Q";
         "Kill Window" = "Meta+Ctrl+Esc";
         "MoveMouseToCenter" = "Meta+C";

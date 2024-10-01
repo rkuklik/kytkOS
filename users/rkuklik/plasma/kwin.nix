@@ -12,6 +12,7 @@
         "Seven"
         "Eight"
         "Nine"
+        "Ten"
       ];
     };
     effects = {

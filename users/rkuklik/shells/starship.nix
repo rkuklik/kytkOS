@@ -41,6 +41,7 @@
     };
     time = {
       disabled = false;
+      time_format = "%R";
     };
     sudo = {
       disabled = false;

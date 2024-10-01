@@ -28,10 +28,7 @@ let
 in {
   programs.nixvim.plugins = {
     friendly-snippets.enable = true;
-    luasnip = {
-      enable = true;
-      fromVscode = [{}];
-    };
+    luasnip.enable = true;
     cmp = {
       enable = true;
       settings = {
