@@ -33,7 +33,10 @@ in {
 
             history: Path = state_home / 'python_history'
 
-            readline.read_history_file(str(history))
+            try:
+                readline.read_history_file(str(history))
+            except:
+                pass
             atexit.register(readline.write_history_file, str(history))
 
 
