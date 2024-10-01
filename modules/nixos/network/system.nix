@@ -28,5 +28,17 @@ in {
   config.networking = {
     hostName = cfg.hostname;
     domain = cfg.domain;
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
+    wireless.iwd.settings = {
+      IPv6 = {
+        Enabled = true;
+      };
+      Settings = {
+        AutoConnect = true;
+      };
+    };
   };
 }

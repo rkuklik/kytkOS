@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   flower,
   lib,
@@ -15,11 +16,10 @@ in {
     restartUnits = ["NetworkManager-ensure-profiles.service"];
   };
   networking.networkmanager = {
-    enable = true;
-    wifi.backend = "iwd";
     ensureProfiles = {
       environmentFiles = [
         config.sops.secrets.networkmanager.path
+        pkgs.certs.certEnv
       ];
       profiles = lib.listToAttrs profiles;
     };
