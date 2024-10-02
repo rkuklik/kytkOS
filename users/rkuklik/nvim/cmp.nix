@@ -88,7 +88,7 @@ in {
       };
       cmdline = let
         search = {
-          mapping.__raw = mapping "preset.cmdline()";
+          mapping = mapping "preset.cmdline()";
           sources = map named ["buffer"];
           view.entries = {
             name = "wildmenu";
@@ -96,7 +96,7 @@ in {
           };
         };
         command = {
-          mapping.__raw = mapping "preset.cmdline()";
+          mapping = mapping "preset.cmdline()";
           sources = map named ["path" "cmdline"];
         };
       in {
