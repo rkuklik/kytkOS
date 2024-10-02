@@ -22,7 +22,7 @@
     names);
 in {
   programs.nixvim.plugins = {
-    lsp.servers.ruff-lsp = {
+    lsp.servers.ruff = {
       enable = true;
     };
     conform-nvim.settings = {

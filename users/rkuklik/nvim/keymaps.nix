@@ -77,18 +77,18 @@ in {
       key = "<A-l>";
       action = "<C-w>l";
     }
-    {
-      key = "<C-h>";
-      action = "<C-w>h";
-    }
-    {
-      key = "<C-j>";
-      action = "<C-w>j";
-    }
-    {
-      key = "<C-k>";
-      action = "<C-w>k";
-    }
+    #{
+    #  key = "<C-h>";
+    #  action = "<C-w>h";
+    #}
+    #{
+    #  key = "<C-j>";
+    #  action = "<C-w>j";
+    #}
+    #{
+    #  key = "<C-k>";
+    #  action = "<C-w>k";
+    #}
     {
       key = "<C-l>";
       action = "<C-w>l";

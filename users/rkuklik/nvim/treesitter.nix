@@ -10,19 +10,18 @@
         };
         incremental_selection = {
           enable = true;
-          keymaps =
-            {
-              init_selection = "<C-space>";
-              node_incremental = "<C-space>";
-              scope_incremental = "<C-s>";
-              node_decremental = "<C-backspace>";
-            }
-            // {
-              init_selection = "gnn";
-              node_incremental = "grm";
-              scope_incremental = "grn";
-              node_decremental = "grc";
-            };
+          keymaps = {
+            init_selection = "<C-space>";
+            node_incremental = "<C-space>";
+            scope_incremental = "<C-s>";
+            node_decremental = "<C-backspace>";
+          };
+          #// {
+          #  init_selection = "gnn";
+          #  node_incremental = "grm";
+          #  scope_incremental = "grn";
+          #  node_decremental = "grc";
+          #}
         };
         indent.enable = true;
       };
