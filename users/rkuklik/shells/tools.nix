@@ -22,5 +22,11 @@
         batdiff
       ];
     };
+    htop = {
+      enable = true;
+    };
+    bottom = {
+      enable = true;
+    };
   };
 }

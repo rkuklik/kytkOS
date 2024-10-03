@@ -41,36 +41,41 @@
   };
 in {
   programs.plasma = {
-    shortcuts.kwin =
-      {
-        "Window Fullscreen" = "Meta+F";
-        "Window Maximize" = "Meta+Shift+F";
-        "Window Close" = "Meta+Q";
-        "Kill Window" = "Meta+Ctrl+Esc";
-        "MoveMouseToCenter" = "Meta+C";
-        "Window Move Center" = "Meta+Shift+C";
-        "Overview" = ["Meta" "Meta+W"];
-        "Window No Border" = "Meta+X";
+    shortcuts = {
+      ksmsserver = {
+        "Lock Session" = "Ctrl+Alt+L";
+      };
+      kwin =
+        {
+          "Window Fullscreen" = "Meta+F";
+          "Window Maximize" = "Meta+Shift+F";
+          "Window Close" = "Meta+Q";
+          "Kill Window" = "Meta+Ctrl+Esc";
+          "MoveMouseToCenter" = "Meta+C";
+          "Window Move Center" = "Meta+Shift+C";
+          "Overview" = ["Meta" "Meta+W"];
+          "Window No Border" = "Meta+X";
 
-        "Window Quick Tile Bottom" = "Meta+Alt+Down";
-        "Window Quick Tile Left" = "Meta+Alt+Left";
-        "Window Quick Tile Right" = "Meta+Alt+Right";
-        "Window Quick Tile Top" = "Meta+Alt+Up";
+          "Window Quick Tile Bottom" = "Meta+Alt+Down";
+          "Window Quick Tile Left" = "Meta+Alt+Left";
+          "Window Quick Tile Right" = "Meta+Alt+Right";
+          "Window Quick Tile Top" = "Meta+Alt+Up";
 
-        "Switch Window Down" = "Meta+Down";
-        "Switch Window Left" = "Meta+Left";
-        "Switch Window Right" = "Meta+Right";
-        "Switch Window Up" = "Meta+Up";
+          "Switch Window Down" = "Meta+Down";
+          "Switch Window Left" = "Meta+Left";
+          "Switch Window Right" = "Meta+Right";
+          "Switch Window Up" = "Meta+Up";
 
-        "Window One Desktop Down" = "Meta+Ctrl+Shift+Down";
-        "Window One Desktop Up" = "Meta+Ctrl+Shift+Up";
-        "Window One Desktop to the Left" = "Meta+Ctrl+Shift+Left";
-        "Window One Desktop to the Right" = "Meta+Ctrl+Shift+Right";
-      }
-      // (desktopMapper "Switch to Desktop" "Meta+")
-      // (desktopMapper "Window to Desktop" "Meta+Ctrl+")
-      // (screenMapper "Switch to Screen" "Meta+Alt+")
-      // (screenMapper "Window to Screen" "Meta+Alt+Ctrl+");
+          "Window One Desktop Down" = "Meta+Ctrl+Shift+Down";
+          "Window One Desktop Up" = "Meta+Ctrl+Shift+Up";
+          "Window One Desktop to the Left" = "Meta+Ctrl+Shift+Left";
+          "Window One Desktop to the Right" = "Meta+Ctrl+Shift+Right";
+        }
+        // (desktopMapper "Switch to Desktop" "Meta+")
+        // (desktopMapper "Window to Desktop" "Meta+Ctrl+")
+        // (screenMapper "Switch to Screen" "Meta+Alt+")
+        // (screenMapper "Window to Screen" "Meta+Alt+Ctrl+");
+    };
     hotkeys.commands = {
       alacritty = mkIf alacritty.enable {
         command = getExe alacrittyLauncher;

@@ -41,7 +41,7 @@ in {
         efiSupport = cfg.mode == "uefi";
         gfxmodeBios = mkDefault "auto";
         gfxmodeEfi = mkDefault "auto";
-        device = mkIf (cfg.loader == "grub") (mkDefault "nodev");
+        device = mkIf (cfg.mode == "uefi") (mkDefault "nodev");
         memtest86.enable = cfg.memtest;
       };
       systemd-boot = {

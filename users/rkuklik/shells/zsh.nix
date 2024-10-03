@@ -49,11 +49,11 @@
         bindkey '\e[F ' end-of-line                  # End
         bindkey '\eOF'  end-of-line                  # End
 
-        if [[ "''${terminfo[khome]}" != "" ]]; then
-          bindkey "''${terminfo[khome]}" beginning-of-line
+        if [[ "$terminfo[khome]" != "" ]]; then
+          bindkey "$terminfo[khome]" beginning-of-line
         fi
-        if [[ "''${terminfo[kend]}" != "" ]]; then
-          bindkey "''${terminfo[kend]}" end-of-line                       # [end] - go to end of line
+        if [[ "$terminfo[kend]" != "" ]]; then
+          bindkey "$terminfo[kend]" end-of-line                       # [end] - go to end of line
         fi
 
         bindkey '^[[2~' overwrite-mode                                  # insert key
@@ -62,6 +62,12 @@
         bindkey '^[[d'  backward-char                                   # left key
         bindkey '^[[5~' history-beginning-search-backward               # page up key
         bindkey '^[[6~' history-beginning-search-forward                # page down key
+        if [[ "$terminfo[kcuu1]" != "" ]]; then
+          bindkey "$terminfo[kcuu1]" history-substring-search-up        # up key
+        fi
+        if [[ "$terminfo[kcud1]" != "" ]]; then
+          bindkey "$terminfo[kcud1]" history-substring-search-down      # down key
+        fi
 
         # navigate words with ctrl+arrow keys
         bindkey '^[[1;5C' forward-word               # C-Right
