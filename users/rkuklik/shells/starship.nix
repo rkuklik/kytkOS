@@ -21,6 +21,14 @@
       number_threshold = 1;
       symbol_threshold = 2;
     };
+    battery = {
+      full_symbol = "full";
+      charging_symbol = "charging";
+      discharging_symbol = "discharging";
+      unknown_symbol = "unknown";
+      empty_symbol = "empty";
+      format = "with [$symbol battery]($style) ";
+    };
     username = {
       show_always = true;
       format = "[$user]($style)";
