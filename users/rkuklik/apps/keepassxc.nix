@@ -8,6 +8,7 @@
       Browser = {
         Enabled = true;
         SearchInAllDatabases = true;
+        AlwaysAllowAccess = true;
       };
       FdoSecrets = {
         Enabled = true;
