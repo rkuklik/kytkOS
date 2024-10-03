@@ -94,7 +94,7 @@ lib: let
     if entity.type == filetype.directory
     then expander (loadDir entity.path)
     else validate entity;
-  expandRecursive = expandWith (mapAttrs (_: file: expandRecursive file));
+  expandRecursive = expandWith (mapAttrs (_: expandRecursive));
 
   enumerate = tree: flatten (mapAttrsToList enumerateMapper tree);
   enumerateMapper = _: entity:

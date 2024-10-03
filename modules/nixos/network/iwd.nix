@@ -9,7 +9,6 @@
     (lib)
     concatStringsSep
     escapeShellArg
-    mapAttrsToList
     getExe
     ;
 
@@ -18,11 +17,11 @@
   envsubst = getExe pkgs.envsubst;
   base = "/var/lib/iwd";
 
-  substituter = _: entity: let
+  substituter = entity: let
     escapedName = escapeShellArg entity.base;
     contents = import entity.path;
   in "${envsubst} -i ${ini escapedName contents} > ${base}/${escapedName}.8021x";
-  creationCommands = mapAttrsToList substituter (flower.fs.tree ../../../data/iwd);
+  creationCommands = map substituter (flower.fs.treeList ../../../data/iwd);
 in {
   sops.secrets."networkmanager" = {
     restartUnits = ["iwd-ensure-provisioning.service"];
