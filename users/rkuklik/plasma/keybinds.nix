@@ -42,7 +42,7 @@
 in {
   programs.plasma = {
     shortcuts = {
-      ksmsserver = {
+      ksmserver = {
         "Lock Session" = "Ctrl+Alt+L";
       };
       kwin =
