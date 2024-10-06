@@ -14,12 +14,16 @@
     };
     desktop.plasma.enable = true;
     audio.enable = true;
-    net.blacklist = {
-      enable = true;
-      fakenews = true;
-      gambling = true;
-      porn = true;
+    net = {
+      wireless = true;
+      blacklist = {
+        enable = true;
+        fakenews = true;
+        gambling = true;
+        porn = true;
+      };
     };
+    bluetooth.enable = true;
     login.tuigreet.enable = true;
   };
 }
