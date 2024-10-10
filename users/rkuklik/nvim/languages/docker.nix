@@ -5,7 +5,7 @@
 }: {
   programs.nixvim.plugins = {
     lsp.servers = {
-      docker-compose-language-service = {
+      docker_compose_language_service = {
         enable = true;
       };
       dockerls = {

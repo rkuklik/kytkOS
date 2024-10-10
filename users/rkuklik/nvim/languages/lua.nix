@@ -4,7 +4,7 @@
   ...
 }: {
   programs.nixvim.plugins = {
-    lsp.servers.lua-ls = {
+    lsp.servers.lua_ls = {
       enable = true;
       settings = {
         workspace.checkThirdParty = true;

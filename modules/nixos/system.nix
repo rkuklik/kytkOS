@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   system,
   ...
@@ -39,6 +40,9 @@ in {
       settings = {
         experimental-features = ["nix-command" "flakes"];
         auto-optimise-store = true;
+      };
+      registry = {
+        nixpkgs.flake = inputs.nixpkgs;
       };
       channel.enable = false;
     };

@@ -12,7 +12,7 @@
   cfg = config.flowerbed.languages;
 in {
   options.flowerbed.languages.python = {
-    enable = mkEnableOption "Rust";
+    enable = mkEnableOption "Python";
   };
   config = mkIf (cfg.python.enable) {
     home = {

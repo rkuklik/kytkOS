@@ -1,3 +1,3 @@
 {
-  programs.nixvim.plugins.lsp.servers.typos-lsp.enable = true;
+  programs.nixvim.plugins.lsp.servers.typos_lsp.enable = true;
 }
