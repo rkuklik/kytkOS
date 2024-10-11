@@ -47,6 +47,13 @@
           };
         };
       };
+      fykos = {
+        address = "radek.kuklik@fykos.cz";
+        userName = "radek.kuklik@fykos.cz";
+        realName = "Kuklík Radek";
+        flavor = "gmail.com";
+        thunderbird.enable = true;
+      };
     };
   };
 }
