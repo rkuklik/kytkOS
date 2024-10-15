@@ -48,7 +48,6 @@ in {
           "<C-f>" = mapping "scroll_docs(4)";
           "<C-Space>" = mapping "complete()";
           "<C-e>" = mapping "abort()";
-          "<CR>" = mapping "confirm({ select = true })";
           "<S-CR>" =
             mapping
             # lua
@@ -57,6 +56,19 @@ in {
                 behavior = cmp.ConfirmBehavior.Replace,
                 select = true,
               })
+            '';
+          "<CR>" =
+            selector
+            # lua
+            ''
+              if cmp.visible() and cmp.get_active_entry() then
+                cmp.confirm({
+                  behavior = cmp.ConfirmBehavior.Replace,
+                  select = false,
+                })
+              else
+                fallback()
+              end
             '';
           "<Tab>" =
             selector

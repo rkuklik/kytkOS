@@ -15,8 +15,8 @@ in
     src = pkgs.fetchFromGitHub {
       owner = "rkuklik";
       repo = pname;
-      rev = "7d8c7bb692790dd7b1ca0f5d6ea321a77f4c49fd";
-      hash = "sha256-2fJSoNKTj7UnL3HcHjbTE2jlGyiuYz3DpvNjPJ4Y+dg=";
+      rev = "7ffc018fec3bcba219e89c38250eacb41e191510";
+      hash = "sha256-B44FUZ8YEGHfAfmHF3ZXr3JtzPgvKToFEfkTfmBhiY8=";
     };
 
     nativeBuildInputs = [

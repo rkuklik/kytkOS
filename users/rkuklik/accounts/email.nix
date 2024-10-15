@@ -4,7 +4,7 @@
     accounts = {
       centrum = {
         address = "kuklik.radek@centrum.cz";
-        userName = "kuklik.radek";
+        userName = "kuklik.radek@centrum.cz";
         realName = "Kuklík Radek";
         primary = true;
         thunderbird.enable = true;

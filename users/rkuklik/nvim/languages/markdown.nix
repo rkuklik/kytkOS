@@ -7,6 +7,9 @@
     lsp.servers.marksman = {
       enable = true;
     };
+    markdown-preview = {
+      enable = true;
+    };
     conform-nvim.settings = {
       formatters_by_ft.markdown = {
         __unkeyed-prettierd = "prettierd";
