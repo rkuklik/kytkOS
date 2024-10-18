@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = [
-    pkgs.armcord
+    pkgs.legcord
     pkgs.caprine
     pkgs.signal-desktop
   ];
