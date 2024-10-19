@@ -8,6 +8,9 @@
       enable = true;
       hidden = true;
     };
+    just = {
+      enable = true;
+    };
     eza = {
       enable = true;
       git = true;
