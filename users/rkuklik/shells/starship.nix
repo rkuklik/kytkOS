@@ -61,6 +61,8 @@
       disabled = false;
       pipestatus = true;
       format = "returned [$status]($style) ";
+      pipestatus_format = "\\[ $pipestatus\\] => [$common_meaning$signal_name]($style) ";
+      pipestatus_separator = "| ";
     };
   };
 
