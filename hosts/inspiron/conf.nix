@@ -24,6 +24,7 @@
       };
     };
     bluetooth.enable = true;
+    containers.enable = true;
     login.tuigreet.enable = true;
   };
 }
