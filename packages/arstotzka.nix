@@ -36,6 +36,7 @@ in
 
     meta = {
       description = "Simple border for KDE Plasma 6";
+      homepage = "https://github.com/rkuklik/${pname}";
       license = lib.licenses.gpl3Plus;
       inherit (libsForQt5.plasma-framework.meta) platforms;
     };

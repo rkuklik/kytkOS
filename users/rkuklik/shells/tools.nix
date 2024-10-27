@@ -32,4 +32,5 @@
       enable = true;
     };
   };
+  home.packages = [pkgs.rustcodex];
 }
