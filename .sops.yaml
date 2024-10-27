@@ -10,4 +10,5 @@ creation_rules:
   - path_regex: secrets/nixos\.(yaml|json|env|ini)$
     key_groups:
       - age:
+          - *rkuklik
           - *inspiron
