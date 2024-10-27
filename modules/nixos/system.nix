@@ -33,12 +33,12 @@ in {
       hostPlatform = system;
       config = {
         allowUnfree = true;
-        use-xdg-base-directories = true;
       };
     };
     nix = {
       settings = {
         experimental-features = ["nix-command" "flakes"];
+        use-xdg-base-directories = true;
         auto-optimise-store = true;
       };
       registry = {
