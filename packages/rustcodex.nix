@@ -9,17 +9,16 @@ in
   rustPlatform.buildRustPackage {
     inherit pname;
     version = "0.0.0";
-    cargoHash = "sha256-SLdOmvZRe3maNahQ/whtfwKLQ8u4FaEopBeseBFPCLo=";
+    cargoHash = "sha256-jc/f5s6ALUbayTjKG6KKhwfeaNmTDUkc4HJZkCct4Gc=";
     src = pkgs.fetchFromGitHub {
       owner = "rkuklik";
       repo = pname;
-      rev = "cde4e7a01350ec1211b28380e1dc923cac45c04b";
-      hash = "sha256-YRtiPYM8YM4Dw4Y5nRmeItXNudmGQ1CoNeDNa17zELs=";
+      rev = "77c7f58c5334dec4a0bf78a106dbfe62dfe522a7";
+      hash = "sha256-zQraVWkuplBMlFOxC2nqXKFdTadrV9lBAlmHJjbDO5o=";
     };
 
     nativeBuildInputs = [installShellFiles];
     postInstall = ''
-      cat Cargo.toml
       installShellCompletion \
         --bash completions/${pname}.bash \
         --fish completions/${pname}.fish \
