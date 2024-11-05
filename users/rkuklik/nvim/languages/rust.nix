@@ -1,17 +1,13 @@
 {
-  lib,
   pkgs,
+  lib,
   ...
 }: {
   programs.nixvim = {
-    extraPackages = [
-      pkgs.cargo
-      pkgs.rustc
-      pkgs.rustfmt
-    ];
     plugins = {
       rustaceanvim = {
         enable = true;
+        rustAnalyzerPackage = pkgs.rust-bin.stable.latest.rust-analyzer;
         settings = {
           tools = {
             on_initialized.__raw =

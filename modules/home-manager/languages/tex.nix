@@ -12,7 +12,7 @@
   cfg = config.flowerbed.languages;
 in {
   options.flowerbed.languages.tex = {
-    enable = mkEnableOption "Latex";
+    enable = mkEnableOption "LaTex";
   };
   config = mkIf (cfg.tex.enable) {
     home = {
