@@ -21,7 +21,7 @@
       type = types.passwdEntry types.str;
       description = "User's full name";
     };
-    admin = mkEnableOption "Give user administrator priviledges";
+    admin = mkEnableOption "Give user administrator privileges";
     net = mkEnableOption "Allow user to change network configuration";
     password = mkOption {
       description = "User's password";

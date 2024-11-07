@@ -4,7 +4,7 @@
   ...
 }: {
   programs.nixvim.plugins = {
-    lsp.servers.ltex = {
+    lsp.servers.texlab = {
       enable = true;
     };
     conform-nvim.settings = {

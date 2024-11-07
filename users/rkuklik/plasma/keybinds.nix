@@ -47,8 +47,8 @@ in {
       };
       kwin =
         {
-          "Window Fullscreen" = "Meta+F";
-          "Window Maximize" = "Meta+Shift+F";
+          "Window Fullscreen" = "Meta+Shift+F";
+          "Window Maximize" = "Meta+F";
           "Window Close" = "Meta+Q";
           "Kill Window" = "Meta+Ctrl+Esc";
           "MoveMouseToCenter" = "Meta+C";

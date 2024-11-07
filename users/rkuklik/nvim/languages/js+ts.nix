@@ -4,8 +4,7 @@ in {
   programs.nixvim = {
     extraPackages = [pkgs.typescript];
     plugins = {
-      typescript-tools.enable = true;
-      lsp.servers.clangd = {
+      lsp.servers.denols = {
         enable = true;
       };
       conform-nvim.settings = {

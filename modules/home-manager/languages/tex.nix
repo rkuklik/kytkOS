@@ -9,12 +9,12 @@
     mkEnableOption
     mkIf
     ;
-  cfg = config.flowerbed.languages;
+  cfg = config.flowerbed.languages.tex;
 in {
   options.flowerbed.languages.tex = {
     enable = mkEnableOption "LaTex";
   };
-  config = mkIf (cfg.tex.enable) {
+  config = mkIf (cfg.enable) {
     home = {
       packages = [pkgs.texliveFull];
     };

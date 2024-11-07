@@ -16,6 +16,11 @@ in {
         identityFile = identities.github;
         inherit extraOptions;
       };
+      gitea = {
+        hostname = "git.fykos.cz";
+        identityFile = identities.github;
+        inherit extraOptions;
+      };
       gitlab = {
         hostname = "gitlab.expect-it.local";
         identityFile = identities.gitlab;

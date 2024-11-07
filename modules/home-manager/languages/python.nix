@@ -9,12 +9,12 @@
     mkEnableOption
     mkIf
     ;
-  cfg = config.flowerbed.languages;
+  cfg = config.flowerbed.languages.python;
 in {
   options.flowerbed.languages.python = {
     enable = mkEnableOption "Python";
   };
-  config = mkIf (cfg.python.enable) {
+  config = mkIf (cfg.enable) {
     home = {
       packages = [pkgs.python3];
       sessionVariables = {

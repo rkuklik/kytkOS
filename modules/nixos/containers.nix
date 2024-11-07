@@ -13,14 +13,12 @@
 in {
   options.kytkos.containers = {
     enable = mkEnableOption "OCI containers";
-    compose = mkEnableOption "Compose utility" // {default = true;};
+    compose = mkEnableOption "Compose utility";
   };
   config = mkIf cfg.enable {
     virtualisation = {
       oci-containers.backend = "podman";
-      containers = {
-        enable = true;
-      };
+      containers.enable = true;
       podman = {
         enable = true;
         dockerCompat = true;

@@ -9,12 +9,12 @@
     mkEnableOption
     mkIf
     ;
-  cfg = config.flowerbed.languages;
+  cfg = config.flowerbed.languages.c-cpp;
 in {
   options.flowerbed.languages.c-cpp = {
     enable = mkEnableOption "C and C++";
   };
-  config = mkIf (cfg.c-cpp.enable) {
+  config = mkIf (cfg.enable) {
     home = {
       packages = [pkgs.gcc];
     };
