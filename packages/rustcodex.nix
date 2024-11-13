@@ -13,8 +13,8 @@ in
     src = pkgs.fetchFromGitHub {
       owner = "rkuklik";
       repo = pname;
-      rev = "77c7f58c5334dec4a0bf78a106dbfe62dfe522a7";
-      hash = "sha256-zQraVWkuplBMlFOxC2nqXKFdTadrV9lBAlmHJjbDO5o=";
+      rev = "35a7a753a4a3dbd36f81cbcc33bd994921967d2a";
+      hash = "sha256-pdO4q96qTjRuE7CXOo6eQyiaObRMqmoPnj4qNMbfr+0=";
     };
 
     nativeBuildInputs = [installShellFiles];
