@@ -9,12 +9,12 @@ in
   rustPlatform.buildRustPackage {
     inherit pname;
     version = "0.0.0";
-    cargoHash = "sha256-jc/f5s6ALUbayTjKG6KKhwfeaNmTDUkc4HJZkCct4Gc=";
+    cargoHash = "sha256-lkcAUGf93A0ddzKbJwvjdVdhg9h5xcBNHabkU6fRTvI=";
     src = pkgs.fetchFromGitHub {
       owner = "rkuklik";
       repo = pname;
-      rev = "35a7a753a4a3dbd36f81cbcc33bd994921967d2a";
-      hash = "sha256-pdO4q96qTjRuE7CXOo6eQyiaObRMqmoPnj4qNMbfr+0=";
+      rev = "66b26ba3bb7d8db974e39a60e6199b8645e7aa14";
+      hash = "sha256-bByRhLpcCcs7NUkru14zPC4hq+LDvNVx8f2Tu4mklIQ=";
     };
 
     nativeBuildInputs = [installShellFiles];
