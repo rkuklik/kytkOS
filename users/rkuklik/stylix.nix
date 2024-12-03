@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   config,
   lib,
@@ -47,7 +46,7 @@ in {
           name = "Noto Sans";
         };
         monospace = {
-          package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+          package = pkgs.nerd-fonts.jetbrains-mono;
           name = "JetbrainsMono Nerd Font";
         };
         sizes = {
