@@ -11,5 +11,6 @@
   flowerbed.jetbrains = {
     rust-rover = true;
     pycharm-community = true;
+    android-studio = true;
   };
 }

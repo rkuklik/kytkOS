@@ -4,7 +4,6 @@
   pkgs,
   extra-cmake-modules,
   kdePackages,
-  libsForQt5,
   qt6,
 }: let
   pname = "arstotzka";
@@ -38,6 +37,6 @@ in
       description = "Simple border for KDE Plasma 6";
       homepage = "https://github.com/rkuklik/${pname}";
       license = lib.licenses.gpl3Plus;
-      inherit (libsForQt5.plasma-framework.meta) platforms;
+      inherit (kdePackages.kdecoration.meta) platforms;
     };
   }
