@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  flower,
   lib,
   ...
 }: let
@@ -9,36 +8,26 @@
     (lib)
     concatStringsSep
     escapeShellArg
+    filterAttrs
     getExe
-    listToAttrs
     mkEnableOption
     mkIf
     ;
+
   cfg = config.kytkos.net;
-
   ini = (pkgs.formats.ini {}).generate;
-
-  imported = transformer: dir:
-    map
-    transformer
-    (flower.fs.treeList ../../../data/${dir});
-
   envsubst = getExe pkgs.envsubst;
   iwdDir = "/var/lib/iwd";
-  iwdProfiles = entity: let
-    escapedName = escapeShellArg entity.base;
-    contents = import entity.path;
-  in "${envsubst} -i ${ini escapedName contents} > ${iwdDir}/${escapedName}.8021x";
-
-  nmProfiles = entity: {
-    name = entity.base;
-    value = import entity.path;
-  };
+  substituter = conf: let
+    name = escapeShellArg conf.name;
+    type = escapeShellArg conf.type;
+    contents = filterAttrs (name: value: name != "name" && name != "type") conf;
+  in "${envsubst} -i ${ini name contents} > ${iwdDir}/${name}.${type}";
 in {
   options.kytkos.net = {
-    wireless = mkEnableOption "Wireless config";
+    enable = mkEnableOption "Network settings" // {default = true;};
   };
-  config = mkIf cfg.wireless {
+  config = mkIf cfg.enable {
     sops.secrets."networkmanager" = {
       restartUnits = [
         "iwd-ensure-provisioning.service"
@@ -54,7 +43,7 @@ in {
         # bash
         ''
           mkdir -p ${iwdDir}
-          ${concatStringsSep "\n" (imported iwdProfiles "iwd")}
+          ${concatStringsSep "\n" (map substituter cfg.iwd)}
           ${pkgs.networkmanager}/bin/nmcli connection reload
         '';
       serviceConfig = {
@@ -72,7 +61,6 @@ in {
             config.sops.secrets.networkmanager.path
             pkgs.certs.certEnv
           ];
-          profiles = listToAttrs (imported nmProfiles "networkmanager");
         };
       };
       wireless.iwd.settings = {

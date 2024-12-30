@@ -15,7 +15,7 @@
     desktop.plasma.enable = true;
     audio.enable = true;
     net = {
-      wireless = true;
+      enable = true;
       blacklist = {
         enable = true;
         fakenews = true;
