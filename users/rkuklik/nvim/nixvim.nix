@@ -7,6 +7,7 @@
     vimdiffAlias = true;
     wrapRc = true;
     editorconfig.enable = true;
+    /*
     performance.byteCompileLua = {
       enable = true;
       configs = true;
@@ -14,5 +15,6 @@
       nvimRuntime = true;
       plugins = true;
     };
+    */
   };
 }

@@ -6,7 +6,8 @@ let
   darkarts =
     # lua
     ''
-      function()
+      -- should check if there are chars before cursor
+      local darkarts = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return true
           and col ~= 0
@@ -21,10 +22,18 @@ let
   # lua
   ''
     cmp.mapping(function(fallback)
-      local luasnip = require("luasnip")
-        ${body}
-      end, { "i", "s" })
+      ${body}
+    end, { 'i', 's' })
   '';
+  jump_local = count:
+    selector
+    # lua
+    ''
+      local luasnip = require('luasnip')
+      if luasnip.locally_jumpable(${count}) then
+        luasnip.jump(${count})
+      end
+    '';
 in {
   programs.nixvim.plugins = {
     friendly-snippets.enable = true;
@@ -46,7 +55,7 @@ in {
           "<C-p>" = mapping "select_prev_item(${select})";
           "<C-b>" = mapping "scroll_docs(-4)";
           "<C-f>" = mapping "scroll_docs(4)";
-          "<C-Space>" = mapping "complete()";
+          #"<C-Space>" = mapping "complete()";
           "<C-e>" = mapping "abort()";
           "<CR>" = mapping "confirm({ select = false })";
           "<S-CR>" =
@@ -62,11 +71,10 @@ in {
             selector
             # lua
             ''
+              ${darkarts}
               if cmp.visible() then
                 cmp.select_next_item()
-              elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-              elseif (${darkarts})() then
+              elseif darkarts() then
                 cmp.complete()
               else
                 fallback()
@@ -78,12 +86,10 @@ in {
             ''
               if cmp.visible() then
                 cmp.select_prev_item()
-              elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-              else
-                fallback()
               end
             '';
+          "<C-s>" = jump_local "1";
+          "<C-S-s>" = jump_local "(-1)";
         };
       };
       cmdline = let
