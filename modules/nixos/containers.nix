@@ -3,14 +3,15 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.kytkos.containers;
-in {
+in
+{
   options.kytkos.containers = {
     enable = mkEnableOption "OCI containers";
     compose = mkEnableOption "Compose utility";

@@ -4,9 +4,9 @@
   lib,
   flower,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     types
     optional
     attrNames
@@ -33,7 +33,7 @@
       settings = mkOption {
         description = "Config options to pass in";
         type = types.anything;
-        default = {};
+        default = { };
       };
     };
   };
@@ -41,35 +41,37 @@
   cfg = config.kytkos.users;
   users = attrNames cfg;
 
-  nixuser = name: let
-    conf = cfg.${name};
-  in {
-    ${name} = {
-      isNormalUser = true;
-      description = conf.name;
-      hashedPassword = mkIf (conf.password != null) (conf.password);
-      extraGroups =
-        []
-        ++ optional conf.admin "wheel"
-        ++ optional conf.net "networkmanager";
+  nixuser =
+    name:
+    let
+      conf = cfg.${name};
+    in
+    {
+      ${name} = {
+        isNormalUser = true;
+        description = conf.name;
+        hashedPassword = mkIf (conf.password != null) (conf.password);
+        extraGroups = [ ] ++ optional conf.admin "wheel" ++ optional conf.net "networkmanager";
+      };
     };
-  };
-  homeuser = name: let
-    conf = cfg.${name}.home-manager;
-  in {
-    ${name} = mkIf conf.enable (
-      mkMerge [
-        {imports = flower.fs.include ../../users/${name};}
+  homeuser =
+    name:
+    let
+      conf = cfg.${name}.home-manager;
+    in
+    {
+      ${name} = mkIf conf.enable (mkMerge [
+        { imports = flower.fs.include ../../users/${name}; }
         conf.settings
-      ]
-    );
-  };
+      ]);
+    };
 
   merger = f: mkMerge (map f users);
-in {
+in
+{
   options.kytkos.users = mkOption {
     type = types.attrsOf (types.submodule userOptions);
-    default = {};
+    default = { };
   };
 
   config = {

@@ -3,9 +3,9 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     listToAttrs
     getExe
     mkIf
@@ -14,32 +14,34 @@
     ;
   inherit (builtins) toString;
 
-  desktopMapper = name: base:
-    listToAttrs
-    (map (num: {
+  desktopMapper =
+    name: base:
+    listToAttrs (
+      map (num: {
         name = "${name} ${toString num}";
         value = "${base}${toString (mod num 10)}";
-      })
-      (range 1 10));
-  screenMapper = name: base:
-    listToAttrs
-    (map (num: {
+      }) (range 1 10)
+    );
+  screenMapper =
+    name: base:
+    listToAttrs (
+      map (num: {
         name = "${name} ${toString (num - 1)}";
         value = "${base}${toString num}";
-      })
-      (range 1 8));
+      }) (range 1 8)
+    );
 
-  inherit
-    (config.programs)
+  inherit (config.programs)
     alacritty
     wezterm
     ;
   alacrittyLauncher = pkgs.writeShellApplication {
     name = "Alacritty";
-    runtimeInputs = [alacritty.package];
+    runtimeInputs = [ alacritty.package ];
     text = "alacritty msg create-window || alacritty";
   };
-in {
+in
+{
   programs.plasma = {
     shortcuts = {
       ksmserver = {
@@ -53,7 +55,10 @@ in {
           "Kill Window" = "Meta+Ctrl+Esc";
           "MoveMouseToCenter" = "Meta+C";
           "Window Move Center" = "Meta+Shift+C";
-          "Overview" = ["Meta" "Meta+W"];
+          "Overview" = [
+            "Meta"
+            "Meta+W"
+          ];
           "Window No Border" = "Meta+X";
 
           "Window Quick Tile Bottom" = "Meta+Alt+Down";

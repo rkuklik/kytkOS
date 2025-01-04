@@ -1,8 +1,9 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs = {
     ripgrep = {
       enable = true;
-      arguments = ["-L"];
+      arguments = [ "-L" ];
     };
     fd = {
       enable = true;
@@ -32,5 +33,5 @@
       enable = true;
     };
   };
-  home.packages = [pkgs.rustcodex];
+  home.packages = [ pkgs.rustcodex ];
 }

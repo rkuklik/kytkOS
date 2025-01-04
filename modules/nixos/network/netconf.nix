@@ -3,9 +3,9 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     filterAttrsRecursive
     listToAttrs
     mkOption
@@ -16,21 +16,22 @@
 
   named = profile: {
     name = profile.connection.id;
-    value =
-      filterAttrsRecursive
-      (name: value: value != null)
-      profile;
+    value = filterAttrsRecursive (name: value: value != null) profile;
   };
 
-  mkType = mandatory:
-    types.listOf (types.submodule {
-      freeformType = (pkgs.formats.ini {}).type;
-      options = mandatory;
-    });
-  strOpt = mkOption {type = types.str;};
+  mkType =
+    mandatory:
+    types.listOf (
+      types.submodule {
+        freeformType = (pkgs.formats.ini { }).type;
+        options = mandatory;
+      }
+    );
+  strOpt = mkOption { type = types.str; };
 
   data = import ../../../data/networks.nix;
-in {
+in
+{
   options.kytkos.net = {
     connections = mkOption {
       type = mkType {

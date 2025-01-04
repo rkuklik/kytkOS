@@ -1,7 +1,8 @@
 let
   name = "rkuklik";
   email = "rkuklik@expect-it.cz";
-in {
+in
+{
   programs.git = {
     enable = true;
     userName = name;
@@ -17,7 +18,11 @@ in {
           ;
       };
       ui = {
-        default-command = ["log" "--revisions" "::"];
+        default-command = [
+          "log"
+          "--revisions"
+          "::"
+        ];
       };
     };
   };

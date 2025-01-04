@@ -2,16 +2,19 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.kytkos.editor;
-in {
+in
+{
   options.kytkos.editor = {
-    enable = mkEnableOption "Editor" // {default = true;};
+    enable = mkEnableOption "Editor" // {
+      default = true;
+    };
   };
 
   config = {

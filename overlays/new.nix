@@ -1,18 +1,17 @@
-final: prev: let
-  inherit
-    (prev)
+final: prev:
+let
+  inherit (prev)
     lib
     callPackage
     ;
-  inherit
-    (lib)
+  inherit (lib)
     flower
     listToAttrs
     ;
   package = entity: {
     name = entity.base;
-    value = callPackage entity.path {};
+    value = callPackage entity.path { };
   };
   packages = flower.fs.treeList ../packages;
 in
-  listToAttrs (map package packages)
+listToAttrs (map package packages)

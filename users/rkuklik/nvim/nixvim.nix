@@ -8,13 +8,13 @@
     wrapRc = true;
     editorconfig.enable = true;
     /*
-    performance.byteCompileLua = {
-      enable = true;
-      configs = true;
-      initLua = true;
-      nvimRuntime = true;
-      plugins = true;
-    };
+      performance.byteCompileLua = {
+        enable = true;
+        configs = true;
+        initLua = true;
+        nvimRuntime = true;
+        plugins = true;
+      };
     */
   };
 }

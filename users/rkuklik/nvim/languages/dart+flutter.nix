@@ -1,6 +1,7 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.nixvim = {
-    extraPlugins = [pkgs.vimPlugins.flutter-tools-nvim];
+    extraPlugins = [ pkgs.vimPlugins.flutter-tools-nvim ];
     plugins.treesitter.enable = true;
     extraConfigLua =
       # lua

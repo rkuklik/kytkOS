@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs.nixvim.plugins = {
     lsp.servers.marksman = {
       enable = true;
@@ -16,7 +17,7 @@
       };
     };
     lint = {
-      lintersByFt.markdown = ["markdownlint"];
+      lintersByFt.markdown = [ "markdownlint" ];
       linters.markdownlint.cmd = lib.getExe pkgs.markdownlint-cli;
     };
   };

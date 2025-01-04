@@ -3,9 +3,9 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkMerge
     mkIf
@@ -23,21 +23,22 @@
     };
   };
   rider = mkIf (cfg.rider) {
-    home.packages = [pkgs.jetbrains.rider];
+    home.packages = [ pkgs.jetbrains.rider ];
     flowerbed.languages.csharp = {
       #enable = true;
     };
   };
   pycharm-community = mkIf (cfg.pycharm-community) {
-    home.packages = [jetbrains.pycharm-community];
+    home.packages = [ jetbrains.pycharm-community ];
     flowerbed.languages.python = {
       enable = true;
     };
   };
   android-studio = mkIf (cfg.android-studio) {
-    home.packages = [pkgs.android-studio];
+    home.packages = [ pkgs.android-studio ];
   };
-in {
+in
+{
   options.flowerbed.jetbrains = {
     rust-rover = mkEnableOption "RustRover";
     rider = mkEnableOption "Rider";

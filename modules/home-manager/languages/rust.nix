@@ -4,9 +4,9 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     optionals
@@ -16,14 +16,15 @@
   latest = pkgs.rust-bin.stable.latest;
   arch = os.nixpkgs.hostPlatform.linuxArch;
   bundle = latest.default.override {
-    extensions = optionals cfg.sources ["rust-src"];
+    extensions = optionals cfg.sources [ "rust-src" ];
     targets = [
       "${arch}-unknown-linux-musl"
       "wasm32-unknown-unknown"
       "wasm32-wasip1"
     ];
   };
-in {
+in
+{
   options.flowerbed.languages.rust = {
     enable = mkEnableOption "Rust";
     sources = mkEnableOption "Rust source code";
@@ -31,7 +32,7 @@ in {
   config = mkIf (cfg.enable) {
     flowerbed.languages.c-cpp.enable = true;
     home = {
-      packages = [bundle];
+      packages = [ bundle ];
       sessionVariables = {
         CARGO_HOME = "${dataHome}/cargo";
         RUSTUP_HOME = "${dataHome}/rustup";

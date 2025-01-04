@@ -4,15 +4,16 @@
   name,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     listToAttrs
     ;
-  value = {};
-  decrypt = paths: listToAttrs (map (name: {inherit name value;}) paths);
-in {
-  imports = [inputs.sops.homeManagerModules.sops];
+  value = { };
+  decrypt = paths: listToAttrs (map (name: { inherit name value; }) paths);
+in
+{
+  imports = [ inputs.sops.homeManagerModules.sops ];
   sops = {
     defaultSopsFile = ../../secrets/rkuklik.yaml;
     age.keyFile = "${os.users.users.${name}.home}/.config/sops/age/keys.txt";

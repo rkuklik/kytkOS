@@ -2,7 +2,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   programs.nixvim.plugins.telescope = {
     enable = true;
     settings.defaults = {
@@ -29,7 +30,9 @@
           preview_width = 0.5;
           preview_cutoff = 0.5;
         };
-        vertical = {mirror = false;};
+        vertical = {
+          mirror = false;
+        };
         width = 0.9;
         height = 0.80;
       };
@@ -78,5 +81,8 @@
       ui-select.enable = true;
     };
   };
-  programs.nixvim.extraPackages = [pkgs.ripgrep pkgs.fd];
+  programs.nixvim.extraPackages = [
+    pkgs.ripgrep
+    pkgs.fd
+  ];
 }

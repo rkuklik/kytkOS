@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs.nixvim = {
     plugins = {
       rustaceanvim = {
@@ -25,7 +26,7 @@
               '';
           };
           server.default_settings.rust-analyzer = {
-            cargo = {};
+            cargo = { };
             procMacro = {
               enable = true;
             };

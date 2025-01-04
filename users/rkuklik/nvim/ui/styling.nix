@@ -1,6 +1,6 @@
-{config, ...}: let
-  inherit
-    (builtins)
+{ config, ... }:
+let
+  inherit (builtins)
     map
     listToAttrs
     ;
@@ -15,13 +15,12 @@
       ctermbg = "none";
     };
   };
-in {
+in
+{
   stylix.targets.nixvim.enable = false;
   programs.nixvim = {
     highlight = listToAttrs (
-      map
-      transparent
-      [
+      map transparent [
         "Normal"
         "NormalNC"
         "NormalFloat"
@@ -37,9 +36,12 @@ in {
       ]
     );
     highlightOverride = listToAttrs (
-      map
-      diagnostic
-      ["Error" "Warn" "Info" "Hint"]
+      map diagnostic [
+        "Error"
+        "Warn"
+        "Info"
+        "Hint"
+      ]
     );
     colorschemes.catppuccin = {
       enable = true;
@@ -64,7 +66,7 @@ in {
       colorizer = {
         enable = true;
         settings = {
-          filetypes = ["*"];
+          filetypes = [ "*" ];
           user_default_options = {
             RGB = true;
             RRGGBB = true;

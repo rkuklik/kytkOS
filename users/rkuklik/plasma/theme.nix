@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   # HACK: lookAndFeelDefaults didn't set this
   kwinrc."org.kde.kdecoration2" = {
     library = "arstotzka";
@@ -6,9 +7,10 @@
     BorderSize = "Tiny";
     BorderSizeAuto = false;
   };
-  # Contains a wallpaper package, a colorscheme file, and a look and feel
-  # package which depends on both.
-in {
+in
+# Contains a wallpaper package, a colorscheme file, and a look and feel
+# package which depends on both.
+{
   config = {
     home.packages = [
       pkgs.arstotzka

@@ -3,14 +3,15 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.flowerbed.languages.csharp;
-in {
+in
+{
   options.flowerbed.languages.csharp = {
     enable = mkEnableOption "C#";
   };

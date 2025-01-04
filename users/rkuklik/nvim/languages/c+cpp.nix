@@ -2,9 +2,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   clang.__unkeyed-clang-format = "clang-format";
-in {
+in
+{
   programs.nixvim.plugins = {
     lsp.servers.clangd = {
       enable = true;

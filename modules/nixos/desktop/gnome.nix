@@ -2,14 +2,15 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.kytkos.desktop.gnome;
-in {
+in
+{
   options.kytkos.desktop.gnome = {
     enable = mkEnableOption "Gnome";
   };

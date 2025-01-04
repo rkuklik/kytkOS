@@ -68,6 +68,7 @@ let
       }
     ];
   };
-in {
-  programs.plasma.panels = [bar];
+in
+{
+  programs.plasma.panels = [ bar ];
 }

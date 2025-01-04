@@ -3,20 +3,21 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.flowerbed.languages.python;
-in {
+in
+{
   options.flowerbed.languages.python = {
     enable = mkEnableOption "Python";
   };
   config = mkIf (cfg.enable) {
     home = {
-      packages = [pkgs.python3];
+      packages = [ pkgs.python3 ];
       sessionVariables = {
         PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc";
       };

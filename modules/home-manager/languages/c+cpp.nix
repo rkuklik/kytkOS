@@ -3,20 +3,21 @@
   pkgs,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.flowerbed.languages.c-cpp;
-in {
+in
+{
   options.flowerbed.languages.c-cpp = {
     enable = mkEnableOption "C and C++";
   };
   config = mkIf (cfg.enable) {
     home = {
-      packages = [pkgs.gcc];
+      packages = [ pkgs.gcc ];
     };
   };
 }

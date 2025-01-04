@@ -3,20 +3,26 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkOption
     mkIf
     types
     ;
   cfg = config.styling;
-in {
+in
+{
   options.styling = {
-    enable = mkEnableOption "Custom theming" // {default = true;};
+    enable = mkEnableOption "Custom theming" // {
+      default = true;
+    };
     polarity = mkOption {
-      type = types.enum ["light" "dark"];
+      type = types.enum [
+        "light"
+        "dark"
+      ];
       default = "dark";
     };
     colorscheme = mkOption {
@@ -37,9 +43,10 @@ in {
       polarity = cfg.polarity;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.colorscheme}.yaml";
       image =
-        if cfg.image != null
-        then cfg.image
-        else "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images_dark/5120x2880.png";
+        if cfg.image != null then
+          cfg.image
+        else
+          "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images_dark/5120x2880.png";
       fonts = {
         sansSerif = {
           package = pkgs.noto-fonts;

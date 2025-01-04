@@ -1,4 +1,5 @@
-{config, ...}: let
+{ config, ... }:
+let
   extraOptions.PreferredAuthentications = "publickey";
   setEnv.TERM = "linux";
   getter = _: name: config.sops.secrets.${name}.path;
@@ -7,7 +8,8 @@
     bigdata = "ssh/expect-it/bigdata";
     gitlab = "ssh/expect-it/gitlab";
   };
-in {
+in
+{
   programs.ssh = {
     enable = true;
     matchBlocks = {

@@ -2,18 +2,19 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   en = "en_US.UTF-8";
   cs = "cs_CZ.UTF-8";
   zone = "Europe/Prague";
   cfg = config.kytkos.localization;
-  inherit
-    (lib)
+  inherit (lib)
     types
     mkOption
     mkDefault
     ;
-in {
+in
+{
   options.kytkos.localization = {
     zone = mkOption {
       default = zone;
@@ -36,19 +37,21 @@ in {
     time.timeZone = cfg.zone;
     i18n = {
       defaultLocale = cfg.locale;
-      extraLocaleSettings = let
-        extra = mkDefault cfg.localeExtra;
-      in {
-        LC_ADDRESS = extra;
-        LC_IDENTIFICATION = extra;
-        LC_MEASUREMENT = extra;
-        LC_MONETARY = extra;
-        LC_NAME = extra;
-        LC_NUMERIC = extra;
-        LC_PAPER = extra;
-        LC_TELEPHONE = extra;
-        LC_TIME = extra;
-      };
+      extraLocaleSettings =
+        let
+          extra = mkDefault cfg.localeExtra;
+        in
+        {
+          LC_ADDRESS = extra;
+          LC_IDENTIFICATION = extra;
+          LC_MEASUREMENT = extra;
+          LC_MONETARY = extra;
+          LC_NAME = extra;
+          LC_NUMERIC = extra;
+          LC_PAPER = extra;
+          LC_TELEPHONE = extra;
+          LC_TIME = extra;
+        };
     };
   };
 }

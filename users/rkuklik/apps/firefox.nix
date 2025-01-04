@@ -3,15 +3,17 @@
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   lock = value: {
     Value = value;
     Status = "locked";
   };
   day = 24 * 60 * 60 * 1000;
   updateInterval = day;
-  addons = import inputs.firefox-addons.outPath {inherit (pkgs) fetchurl lib stdenv;};
-in {
+  addons = import inputs.firefox-addons.outPath { inherit (pkgs) fetchurl lib stdenv; };
+in
+{
   programs.firefox = {
     enable = true;
     languagePacks = [
@@ -77,7 +79,7 @@ in {
     profiles.main = {
       id = 0;
       containersForce = true;
-      bookmarks = [];
+      bookmarks = [ ];
       extensions = with addons; [
         i-dont-care-about-cookies
         ublock-origin
@@ -134,24 +136,33 @@ in {
         ];
         engines = {
           "Lib.rs" = {
-            urls = [{template = "https://lib.rs/search?q={searchTerms}";}];
+            urls = [ { template = "https://lib.rs/search?q={searchTerms}"; } ];
             description = "Rust packages/libraries/programs";
             iconUpdateUrl = "https://lib.rs/favicon.png";
-            definedAliases = ["!l" "@lib"];
+            definedAliases = [
+              "!l"
+              "@lib"
+            ];
             inherit updateInterval;
           };
           "Docs.rs" = {
-            urls = [{template = "https://docs.rs/releases/search?query={searchTerms}";}];
+            urls = [ { template = "https://docs.rs/releases/search?query={searchTerms}"; } ];
             description = "Search for crate documentation on docs.rs";
             iconUpdateUrl = "https://docs.rs/-/static/favicon.ico";
-            definedAliases = ["!d" "@docs"];
+            definedAliases = [
+              "!d"
+              "@docs"
+            ];
             inherit updateInterval;
           };
           "MDN Web Docs" = {
-            urls = [{template = "https://developer.mozilla.org/en-US/search?q={searchTerms}";}];
+            urls = [ { template = "https://developer.mozilla.org/en-US/search?q={searchTerms}"; } ];
             description = "Search the MDN Web Docs";
             iconUpdateUrl = "https://developer.mozilla.org/favicon.ico";
-            definedAliases = ["!m" "@mdn"];
+            definedAliases = [
+              "!m"
+              "@mdn"
+            ];
             inherit updateInterval;
           };
           "NixOS packages" = {
@@ -176,21 +187,30 @@ in {
             ];
             description = "Search NixOS packages";
             iconUpdateUrl = "https://search.nixos.org/favicon.png";
-            definedAliases = ["!p" "@np"];
+            definedAliases = [
+              "!p"
+              "@np"
+            ];
             inherit updateInterval;
           };
           "Noogle" = {
-            urls = [{template = "https://noogle.dev/q?term={searchTerms}";}];
+            urls = [ { template = "https://noogle.dev/q?term={searchTerms}"; } ];
             description = "Nix API reference";
             iconUpdateUrl = "https://noogle.dev/favicon.png";
-            definedAliases = ["!n" "@no"];
+            definedAliases = [
+              "!n"
+              "@no"
+            ];
             inherit updateInterval;
           };
           "MyNixOS" = {
-            urls = [{template = "https://mynixos.com/search?q={searchTerms}";}];
+            urls = [ { template = "https://mynixos.com/search?q={searchTerms}"; } ];
             description = "Build and share reproducible software environments with Nix and NixOS";
             iconUpdateUrl = "https://mynixos.com/favicon-64x64.png";
-            definedAliases = ["!o" "@mn"];
+            definedAliases = [
+              "!o"
+              "@mn"
+            ];
             inherit updateInterval;
           };
           "Startpage" = {
@@ -205,14 +225,24 @@ in {
             ];
             description = "Startpage Search";
             iconUpdateUrl = "https://www.startpage.com/favicon.ico";
-            definedAliases = ["!s" "@start"];
+            definedAliases = [
+              "!s"
+              "@start"
+            ];
             inherit updateInterval;
           };
           "YouTube" = {
-            urls = [{template = "https://www.youtube.com/results?search_query={searchTerms}&page={startPage?}&utm_source=opensearch";}];
+            urls = [
+              {
+                template = "https://www.youtube.com/results?search_query={searchTerms}&page={startPage?}&utm_source=opensearch";
+              }
+            ];
             description = "Search for videos on YouTube";
             iconUpdateUrl = "https://www.youtube.com/favicon.ico";
-            definedAliases = ["!y" "@yt"];
+            definedAliases = [
+              "!y"
+              "@yt"
+            ];
             inherit updateInterval;
           };
           "Wikipedia (en)".metaData.alias = "!w";

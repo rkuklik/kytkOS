@@ -2,9 +2,9 @@
   lib,
   pkgs,
   ...
-}: let
-  inherit
-    (builtins)
+}:
+let
+  inherit (builtins)
     map
     listToAttrs
     attrValues
@@ -18,7 +18,8 @@
     inherit name;
     value.command = lib.getExe pkgs."${name}";
   };
-in {
+in
+{
   programs.nixvim.plugins = {
     lsp.servers.bashls = {
       enable = true;
@@ -32,9 +33,9 @@ in {
     };
     lint = {
       lintersByFt = {
-        sh = ["shellcheck"];
-        bash = ["shellcheck"];
-        fish = ["fish"];
+        sh = [ "shellcheck" ];
+        bash = [ "shellcheck" ];
+        fish = [ "fish" ];
       };
       linters = {
         shellcheck.cmd = lib.getExe pkgs.shellcheck;

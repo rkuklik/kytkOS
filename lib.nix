@@ -1,6 +1,6 @@
-lib: let
-  inherit
-    (builtins)
+lib:
+let
+  inherit (builtins)
     map
     listToAttrs
     ;
@@ -14,5 +14,4 @@ lib: let
   };
   namespaced = map named modules;
 in
-  listToAttrs
-  namespaced
+listToAttrs namespaced

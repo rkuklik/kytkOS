@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   presets = [
     "plain-text-symbols"
     "no-runtime-versions"
@@ -68,13 +69,14 @@
 
   pkg = config.programs.starship.package;
   fileMapper = map (f: "${pkg}/share/starship/presets/${f}.toml");
-  configfile = pkgs.runCommand "starship.toml" {nativeBuildInputs = [pkgs.yq];} ''
+  configfile = pkgs.runCommand "starship.toml" { nativeBuildInputs = [ pkgs.yq ]; } ''
     tomlq -s -t 'reduce .[] as $item ({}; . * $item)' \
       ${lib.concatStringsSep " " (fileMapper presets)} \
-      ${(pkgs.formats.toml {}).generate "starship.toml" settings} \
+      ${(pkgs.formats.toml { }).generate "starship.toml" settings} \
       > $out
   '';
-in {
+in
+{
   programs.starship.enable = true;
   xdg.configFile."starship.toml".source = configfile;
 }

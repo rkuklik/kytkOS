@@ -2,7 +2,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) listToAttrs;
   names = map (name: "ruff_${name}") [
     "fix"
@@ -19,7 +20,8 @@
     name = "__unkeyed-${name}";
     value = name;
   };
-in {
+in
+{
   programs.nixvim.plugins = {
     lsp.servers.pyright = {
       enable = true;
@@ -29,7 +31,7 @@ in {
       formatters = transformed formatters;
     };
     lint = {
-      lintersByFt.python = ["ruff"];
+      lintersByFt.python = [ "ruff" ];
       linters.ruff.cmd = ruff;
     };
   };

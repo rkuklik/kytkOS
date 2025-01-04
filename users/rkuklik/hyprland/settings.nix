@@ -1,6 +1,8 @@
-{os, ...}: let
+{ os, ... }:
+let
   mod = "SUPER";
-in {
+in
+{
   wayland.windowManager.hyprland = {
     enable = os.kytkos.desktop.hyprland.enable;
     settings = {

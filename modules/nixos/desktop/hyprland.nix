@@ -2,14 +2,15 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.kytkos.desktop.hyprland;
-in {
+in
+{
   options.kytkos.desktop.hyprland = {
     enable = mkEnableOption "KDE Plasma";
   };

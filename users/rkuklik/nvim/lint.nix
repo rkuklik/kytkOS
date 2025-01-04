@@ -2,7 +2,11 @@
   programs.nixvim.plugins.lint = {
     enable = true;
     autoCmd = {
-      event = ["BufWritePost" "BufReadPost" "InsertLeave"];
+      event = [
+        "BufWritePost"
+        "BufReadPost"
+        "InsertLeave"
+      ];
       callback.__raw =
         # lua
         ''

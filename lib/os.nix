@@ -1,4 +1,5 @@
-lib: let
+lib:
+let
   systems = {
     linux = {
       x86_64 = "x86_64-linux";
@@ -9,7 +10,8 @@ lib: let
       aarch64 = "aarch64-darwin";
     };
   };
-in {
+in
+{
   inherit
     systems
     ;

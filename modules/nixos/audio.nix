@@ -2,14 +2,15 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     ;
   cfg = config.kytkos.audio;
   enable = cfg.enable;
-in {
+in
+{
   options.kytkos.audio = {
     enable = mkEnableOption "Audio";
   };

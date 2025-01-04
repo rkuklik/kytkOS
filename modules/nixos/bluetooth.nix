@@ -2,14 +2,15 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.kytkos.bluetooth;
-in {
+in
+{
   options.kytkos.bluetooth = {
     enable = mkEnableOption "Bluetooth";
   };

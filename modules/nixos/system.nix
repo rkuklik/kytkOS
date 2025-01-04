@@ -3,18 +3,23 @@
   lib,
   system,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     listToAttrs
     mkDefault
     mkOption
     ;
 
-  options = ["distroName" "distroId" "codeName"];
-  value = mkOption {readOnly = false;};
-  writeable = name: {inherit name value;};
-in {
+  options = [
+    "distroName"
+    "distroId"
+    "codeName"
+  ];
+  value = mkOption { readOnly = false; };
+  writeable = name: { inherit name value; };
+in
+{
   options.system.nixos = listToAttrs (map writeable options);
   config = {
     programs = {
@@ -37,7 +42,10 @@ in {
     };
     nix = {
       settings = {
-        experimental-features = ["nix-command" "flakes"];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         use-xdg-base-directories = true;
         auto-optimise-store = true;
       };

@@ -1,3 +1,4 @@
-{pkgs, ...}: {
-  programs.nixvim.extraPlugins = [pkgs.vimPlugins.vim-be-good];
+{ pkgs, ... }:
+{
+  programs.nixvim.extraPlugins = [ pkgs.vimPlugins.vim-be-good ];
 }

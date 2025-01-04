@@ -1,7 +1,7 @@
 let
   inherit (builtins) map;
-  named = name: {inherit name;};
-  mapping = body: {__raw = "cmp.mapping.${body}";};
+  named = name: { inherit name; };
+  mapping = body: { __raw = "cmp.mapping.${body}"; };
   select = "{ behavior = cmp.SelectBehavior.Select }";
   darkarts =
     # lua
@@ -18,23 +18,26 @@ let
               == nil
       end
     '';
-  selector = body:
-  # lua
-  ''
-    cmp.mapping(function(fallback)
-      ${body}
-    end, { 'i', 's' })
-  '';
-  jump_local = count:
-    selector
+  selector =
+    body:
     # lua
     ''
-      local luasnip = require('luasnip')
-      if luasnip.locally_jumpable(${count}) then
-        luasnip.jump(${count})
-      end
+      cmp.mapping(function(fallback)
+        ${body}
+      end, { 'i', 's' })
     '';
-in {
+  jump_local =
+    count:
+    selector
+      # lua
+      ''
+        local luasnip = require('luasnip')
+        if luasnip.locally_jumpable(${count}) then
+          luasnip.jump(${count})
+        end
+      '';
+in
+{
   programs.nixvim.plugins = {
     friendly-snippets.enable = true;
     luasnip.enable = true;
@@ -60,56 +63,61 @@ in {
           "<CR>" = mapping "confirm({ select = false })";
           "<S-CR>" =
             mapping
-            # lua
-            ''
-              confirm({
-                behavior = cmp.ConfirmBehavior.Replace,
-                select = true,
-              })
-            '';
+              # lua
+              ''
+                confirm({
+                  behavior = cmp.ConfirmBehavior.Replace,
+                  select = true,
+                })
+              '';
           "<Tab>" =
             selector
-            # lua
-            ''
-              ${darkarts}
-              if cmp.visible() then
-                cmp.select_next_item()
-              elseif darkarts() then
-                cmp.complete()
-              else
-                fallback()
-              end
-            '';
+              # lua
+              ''
+                ${darkarts}
+                if cmp.visible() then
+                  cmp.select_next_item()
+                elseif darkarts() then
+                  cmp.complete()
+                else
+                  fallback()
+                end
+              '';
           "<S-Tab>" =
             selector
-            # lua
-            ''
-              if cmp.visible() then
-                cmp.select_prev_item()
-              end
-            '';
+              # lua
+              ''
+                if cmp.visible() then
+                  cmp.select_prev_item()
+                end
+              '';
           "<C-s>" = jump_local "1";
           "<C-S-s>" = jump_local "(-1)";
         };
       };
-      cmdline = let
-        search = {
-          mapping = mapping "preset.cmdline()";
-          sources = map named ["buffer"];
-          view.entries = {
-            name = "wildmenu";
-            separator = " | ";
+      cmdline =
+        let
+          search = {
+            mapping = mapping "preset.cmdline()";
+            sources = map named [ "buffer" ];
+            view.entries = {
+              name = "wildmenu";
+              separator = " | ";
+            };
           };
+          command = {
+            mapping = mapping "preset.cmdline()";
+            sources = map named [
+              "path"
+              "cmdline"
+            ];
+          };
+        in
+        {
+          "/" = search;
+          "?" = search;
+          ":" = command;
         };
-        command = {
-          mapping = mapping "preset.cmdline()";
-          sources = map named ["path" "cmdline"];
-        };
-      in {
-        "/" = search;
-        "?" = search;
-        ":" = command;
-      };
     };
   };
 }

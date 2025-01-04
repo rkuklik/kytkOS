@@ -1,11 +1,12 @@
-{config, ...}: let
-  inherit
-    (config.xdg)
+{ config, ... }:
+let
+  inherit (config.xdg)
     configHome
     dataHome
     stateHome
     ;
-in {
+in
+{
   xdg = {
     enable = true;
     userDirs = {

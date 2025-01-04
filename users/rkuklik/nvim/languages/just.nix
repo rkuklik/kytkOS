@@ -2,9 +2,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   just = lib.getExe pkgs.just;
-in {
+in
+{
   programs.nixvim.plugins = {
     conform-nvim.settings = {
       formatters_by_ft.just = {

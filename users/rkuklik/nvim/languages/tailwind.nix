@@ -2,13 +2,15 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   wind.__unkeyed-rustywind = "rustywind";
-in {
+in
+{
   programs.nixvim.plugins = {
     lsp.servers.tailwindcss = {
       enable = true;
-      filetypes = ["rust"];
+      filetypes = [ "rust" ];
       settings = {
         userLanguages.rust = "html";
       };

@@ -2,9 +2,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   prettierd.__unkeyed-prettierd = "prettierd";
-in {
+in
+{
   programs.nixvim.plugins = {
     lsp.servers.jsonls = {
       enable = true;

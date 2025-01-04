@@ -1,8 +1,10 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   prettierd.__unkeyed-prettierd = "prettierd";
-in {
+in
+{
   programs.nixvim = {
-    extraPackages = [pkgs.typescript];
+    extraPackages = [ pkgs.typescript ];
     plugins = {
       lsp.servers.denols = {
         enable = true;

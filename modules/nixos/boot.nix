@@ -2,9 +2,9 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkDefault
     mkEnableOption
     mkOption
@@ -12,15 +12,22 @@
     types
     ;
   cfg = config.kytkos.boot;
-in {
+in
+{
   options.kytkos.boot = {
     loader = mkOption {
       description = "Which bootloader to user";
-      type = types.enum ["grub" "systemd-boot"];
+      type = types.enum [
+        "grub"
+        "systemd-boot"
+      ];
     };
     mode = mkOption {
       description = "Type of firmware";
-      type = types.enum ["uefi" "bios"];
+      type = types.enum [
+        "uefi"
+        "bios"
+      ];
     };
     memtest = mkEnableOption "Memory testing";
   };

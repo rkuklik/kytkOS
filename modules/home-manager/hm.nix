@@ -3,14 +3,16 @@
   lib,
   os,
   ...
-}: let
+}:
+let
   flaked = name: inputs.${name}.homeManagerModules.${name};
   modules = [
     "plasma-manager"
     "stylix"
     "nixvim"
   ];
-in {
+in
+{
   imports = map flaked modules;
   config = {
     programs.home-manager.enable = true;

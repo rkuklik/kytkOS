@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   flags = lib.concatStringsSep " " [
     "--impure"
     "--extra-experimental-features 'nix-command flakes'"
@@ -48,7 +49,7 @@
       "pipefail"
       "errexit"
     ];
-    runtimeInputs = [pkgs.nix];
+    runtimeInputs = [ pkgs.nix ];
     runtimeEnv = {
       NIXPKGS_ALLOW_UNFREE = 1;
     };
@@ -57,6 +58,10 @@
     ];
   };
   pkg = cfg: pkgs.writeShellApplication (opts // cfg);
-in {
-  home.packages = map pkg [shell run];
+in
+{
+  home.packages = map pkg [
+    shell
+    run
+  ];
 }

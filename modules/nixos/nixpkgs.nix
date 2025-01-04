@@ -2,16 +2,18 @@
   flower,
   inputs,
   ...
-}: let
+}:
+let
   overlays = flower.fs.include ../../overlays;
   stdlib = final: prev: {
-    lib = prev.lib // {inherit flower;};
+    lib = prev.lib // {
+      inherit flower;
+    };
   };
-in {
-  nixpkgs.overlays =
-    [
-      stdlib
-      inputs.rust.overlays.default
-    ]
-    ++ map import overlays;
+in
+{
+  nixpkgs.overlays = [
+    stdlib
+    inputs.rust.overlays.default
+  ] ++ map import overlays;
 }

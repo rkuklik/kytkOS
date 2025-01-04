@@ -1,6 +1,12 @@
 let
-  all = ["n" "v" "o" "i"];
-in {
+  all = [
+    "n"
+    "v"
+    "o"
+    "i"
+  ];
+in
+{
   programs.nixvim.keymaps = [
     # clipboard
     {
@@ -32,7 +38,10 @@ in {
     {
       key = "<leader>d";
       action = "\"_d";
-      mode = ["n" "v"];
+      mode = [
+        "n"
+        "v"
+      ];
     }
     # tabs
     {

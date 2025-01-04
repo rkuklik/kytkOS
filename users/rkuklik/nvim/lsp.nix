@@ -50,7 +50,10 @@
         key = "<leader>ca";
         action.__raw = "vim.lsp.buf.code_action";
         options.desc = "Code Action";
-        mode = ["n" "v"];
+        mode = [
+          "n"
+          "v"
+        ];
         #has = "codeAction";
       }
       {

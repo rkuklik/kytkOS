@@ -1,6 +1,6 @@
-{config, ...}: let
-  inherit
-    (builtins)
+{ config, ... }:
+let
+  inherit (builtins)
     map
     listToAttrs
     ;
@@ -10,28 +10,30 @@
     quiet = false;
     #async = false;
   };
-  cmd = {
-    name,
-    buffer,
-    global,
-  }: {
-    name = "Format${name}";
-    value = {
-      bang = true;
-      desc = "${name} autoformat (bang for buffer)";
-      command.__raw =
-        # lua
-        ''
-          function(args)
-            if args.bang then
-              ${buffer}
-            else
-              ${global}
+  cmd =
+    {
+      name,
+      buffer,
+      global,
+    }:
+    {
+      name = "Format${name}";
+      value = {
+        bang = true;
+        desc = "${name} autoformat (bang for buffer)";
+        command.__raw =
+          # lua
+          ''
+            function(args)
+              if args.bang then
+                ${buffer}
+              else
+                ${global}
+              end
             end
-          end
-        '';
+          '';
+      };
     };
-  };
   disable = {
     name = "Disable";
     buffer = "vim.b[0].autoformat = false";
@@ -56,7 +58,8 @@
     global = "vim.g.autoformat = not vim.g.autoformat";
   };
   fmtOptsObject = config.lib.nixvim.toLuaObject fmtOpts;
-in {
+in
+{
   programs.nixvim.plugins.conform-nvim = {
     enable = true;
     settings.format_on_save =
@@ -95,6 +98,12 @@ in {
     ];
     globals.autoformat = true;
     opts.formatexpr = "v:lua.require('conform').formatexpr()";
-    userCommands = listToAttrs (map cmd [disable enable toggle]);
+    userCommands = listToAttrs (
+      map cmd [
+        disable
+        enable
+        toggle
+      ]
+    );
   };
 }

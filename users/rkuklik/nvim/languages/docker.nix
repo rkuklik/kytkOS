@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs.nixvim.plugins = {
     lsp.servers = {
       docker_compose_language_service = {
@@ -13,7 +14,7 @@
       };
     };
     lint = {
-      lintersByFt.docker = ["hadolint"];
+      lintersByFt.docker = [ "hadolint" ];
       linters.hadolint.cmd = lib.getExe pkgs.hadolint;
     };
   };

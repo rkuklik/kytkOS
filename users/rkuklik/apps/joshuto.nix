@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   preview = pkgs.writeShellApplication {
     name = "joshuto-preview";
     bashOptions = [
@@ -16,7 +17,7 @@
       "SC2317"
     ];
     # do not include deps here, depend on env
-    runtimeInputs = [pkgs.file];
+    runtimeInputs = [ pkgs.file ];
     text = ''
       # Parse args
       FILE_PATH=""
@@ -173,7 +174,8 @@
       exit 1
     '';
   };
-in {
+in
+{
   programs.joshuto = {
     enable = true;
     settings = {
@@ -187,7 +189,11 @@ in {
         automatically_count_files = true;
         collapse_preview = true;
         scroll_offset = 6;
-        column_ratio = [1 2 2];
+        column_ratio = [
+          1
+          2
+          2
+        ];
         show_borders = true;
         show_hidden = true;
         show_icons = true;
@@ -211,7 +217,7 @@ in {
         audio_default = [
           {
             command = "mpv";
-            args = ["--"];
+            args = [ "--" ];
           }
           {
             command = "mediainfo";
@@ -221,13 +227,13 @@ in {
         image_default = [
           {
             command = "qimgv";
-            args = ["--"];
+            args = [ "--" ];
             fork = true;
             silent = true;
           }
           {
             command = "krita";
-            args = ["--"];
+            args = [ "--" ];
             fork = true;
             silent = true;
           }
@@ -237,7 +243,7 @@ in {
           }
           {
             command = "swappy";
-            args = ["-f"];
+            args = [ "-f" ];
             fork = true;
           }
         ];
@@ -256,7 +262,7 @@ in {
         video_default = [
           {
             command = "mpv";
-            args = ["--"];
+            args = [ "--" ];
             fork = true;
             silent = true;
           }
@@ -266,7 +272,11 @@ in {
           }
           {
             command = "mpv";
-            args = ["--mute" "on" "--"];
+            args = [
+              "--mute"
+              "on"
+              "--"
+            ];
             fork = true;
             silent = true;
           }
@@ -277,7 +287,7 @@ in {
           }
           {
             command = "bat";
-            args = ["--paging=always"];
+            args = [ "--paging=always" ];
           }
         ];
         reader_default = [
@@ -295,71 +305,73 @@ in {
           }
         ];
       };
-      extension = let
-        archives = {
-          "7z" = {
-            command = "7z";
-            args = ["x"];
+      extension =
+        let
+          archives = {
+            "7z" = {
+              command = "7z";
+              args = [ "x" ];
+            };
+            bz2 = {
+              command = "tar";
+              args = [ "-xvjf" ];
+            };
+            gz = {
+              command = "tar";
+              args = [ "-xvzf" ];
+            };
+            tar = {
+              command = "tar";
+              args = [ "-xvf" ];
+            };
+            tgz = {
+              command = "tar";
+              args = [ "-xvzf" ];
+            };
+            rar = {
+              command = "unrar";
+              args = [ "x" ];
+            };
+            xz = {
+              command = "tar";
+              args = [ "-xvJf" ];
+            };
+            zip = {
+              command = "unzip";
+            };
+            zst = {
+              command = "zstd";
+              args = [ "-d" ];
+            };
           };
-          bz2 = {
-            command = "tar";
-            args = ["-xvjf"];
+          inheritor = default: name: {
+            name = name;
+            value."inherit" = default;
           };
-          gz = {
-            command = "tar";
-            args = ["-xvzf"];
+          image = inheritor "image_default";
+          vector = inheritor "vector_default";
+          audio = inheritor "audio_default";
+          video = inheritor "video_default";
+          text = inheritor "text_default";
+          office = inheritor "libreoffice_default";
+          reader = inheritor "reader_default";
+          archive = name: {
+            inherit name;
+            value.app_list = [
+              {
+                command = "file-roller";
+                fork = true;
+                silent = true;
+              }
+              archives.${name}
+            ];
           };
-          tar = {
-            command = "tar";
-            args = ["-xvf"];
-          };
-          tgz = {
-            command = "tar";
-            args = ["-xvzf"];
-          };
-          rar = {
-            command = "unrar";
-            args = ["x"];
-          };
-          xz = {
-            command = "tar";
-            args = ["-xvJf"];
-          };
-          zip = {command = "unzip";};
-          zst = {
-            command = "zstd";
-            args = ["-d"];
-          };
-        };
-        inheritor = default: name: {
-          name = name;
-          value."inherit" = default;
-        };
-        image = inheritor "image_default";
-        vector = inheritor "vector_default";
-        audio = inheritor "audio_default";
-        video = inheritor "video_default";
-        text = inheritor "text_default";
-        office = inheritor "libreoffice_default";
-        reader = inheritor "reader_default";
-        archive = name: {
-          inherit name;
-          value.app_list = [
-            {
-              command = "file-roller";
-              fork = true;
-              silent = true;
-            }
-            archives.${name}
-          ];
-        };
-        inherit
-          (lib)
-          attrNames
-          flatten
-          listToAttrs
-          ;
-      in
+          inherit (lib)
+            attrNames
+            flatten
+            listToAttrs
+            ;
+        in
         listToAttrs (flatten [
           ## image formats
           (map image [
@@ -378,7 +390,7 @@ in {
             "webp"
           ])
 
-          (map vector ["svg"])
+          (map vector [ "svg" ])
 
           ## audio formats
           (map audio [
@@ -498,7 +510,7 @@ in {
           {
             name = "torrent";
             value.app_list = [
-              {command = "transmission-gtk";}
+              { command = "transmission-gtk"; }
             ];
           }
 
@@ -515,7 +527,7 @@ in {
             "pptx"
           ])
 
-          (map reader ["pdf"])
+          (map reader [ "pdf" ])
 
           # application/octet-stream
           {

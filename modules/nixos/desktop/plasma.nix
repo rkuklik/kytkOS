@@ -2,14 +2,15 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.kytkos.desktop.plasma;
-in {
+in
+{
   options.kytkos.desktop.plasma = {
     enable = mkEnableOption "KDE Plasma";
   };

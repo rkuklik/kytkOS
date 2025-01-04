@@ -2,14 +2,15 @@
   config,
   lib,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     mkEnableOption
     mkIf
     ;
   cfg = config.kytkos.login.gdm;
-in {
+in
+{
   options.kytkos.login.gdm = {
     enable = mkEnableOption "Use gdm as login manager";
   };

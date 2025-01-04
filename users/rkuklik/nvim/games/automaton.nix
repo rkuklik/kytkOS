@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   animations = {
     slide = {
       fps = 50;
@@ -64,30 +65,31 @@
         '';
     };
   };
-in {
+in
+{
   programs.nixvim = {
-    extraPlugins = [pkgs.vimPlugins.cellular-automaton-nvim];
+    extraPlugins = [ pkgs.vimPlugins.cellular-automaton-nvim ];
     plugins.treesitter.enable = true;
-    extraConfigLua = let
-      inherit
-        (lib)
-        attrValues
-        mapAttrs
-        ;
-      converted = attrValues (
-        mapAttrs
-        (
-          name: {
-            fps ? 30,
-            update,
-          }: {
-            inherit name fps;
-            update.__raw = update;
-          }
-        )
-        animations
-      );
-    in
+    extraConfigLua =
+      let
+        inherit (lib)
+          attrValues
+          mapAttrs
+          ;
+        converted = attrValues (
+          mapAttrs (
+            name:
+            {
+              fps ? 30,
+              update,
+            }:
+            {
+              inherit name fps;
+              update.__raw = update;
+            }
+          ) animations
+        );
+      in
       # lua
       ''
         do

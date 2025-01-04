@@ -1,6 +1,7 @@
 let
   enabled.__raw = "{}";
-in {
+in
+{
   programs.nixvim.plugins = {
     hardtime = {
       enable = true;

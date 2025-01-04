@@ -1,11 +1,10 @@
-lib: let
-  inherit
-    (builtins)
+lib:
+let
+  inherit (builtins)
     readDir
     readFileType
     ;
-  inherit
-    (lib)
+  inherit (lib)
     filter
     flatten
     hasAttr
@@ -22,30 +21,21 @@ lib: let
     symlink = "symlink";
   };
 
-  entity = {
-    directory,
-    name,
-    type,
-  }: let
-    path =
-      if name != null
-      then lib.path.append directory name
-      else directory;
-    nameSplit =
-      mapNullable
-      (match "^(.*)\\.(.+)$")
-      name;
-    base =
-      mapNullable
-      lib.head
-      nameSplit;
-    ext =
-      mapNullable
-      lib.last
-      nameSplit;
-  in
+  entity =
+    {
+      directory,
+      name,
+      type,
+    }:
+    let
+      path = if name != null then lib.path.append directory name else directory;
+      nameSplit = mapNullable (match "^(.*)\\.(.+)$") name;
+      base = mapNullable lib.head nameSplit;
+      ext = mapNullable lib.last nameSplit;
+    in
     assert hasAttr type filetype;
-    assert name == null -> type == filetype.directory; {
+    assert name == null -> type == filetype.directory;
+    {
       inherit
         directory
         name
@@ -55,7 +45,8 @@ lib: let
         ext
         ;
     };
-  isEntity = entity:
+  isEntity =
+    entity:
     true
     && (entity ? directory)
     && (entity ? name)
@@ -63,44 +54,44 @@ lib: let
     && (entity ? type)
     && (entity ? base)
     && (entity ? ext);
-  validate = entity:
+  validate =
+    entity:
     assert isEntity entity;
     assert entity.name != null -> entity.type != filetype.directory;
-    assert readFileType entity.path == entity.type; entity;
+    assert readFileType entity.path == entity.type;
+    entity;
 
-  file = directory: name:
+  file =
+    directory: name:
     entity {
       inherit directory name;
       type = filetype.regular;
     };
-  symlink = directory: name:
+  symlink =
+    directory: name:
     entity {
       inherit directory name;
       type = filetype.symlink;
     };
-  directory = directory:
+  directory =
+    directory:
     entity {
       inherit directory;
       name = null;
       type = filetype.directory;
     };
 
-  loadDir = directory:
-    mapAttrs
-    (name: type: entity {inherit directory name type;})
-    (readDir directory);
+  loadDir =
+    directory: mapAttrs (name: type: entity { inherit directory name type; }) (readDir directory);
 
-  expandWith = expander: entity:
-    if entity.type == filetype.directory
-    then expander (loadDir entity.path)
-    else validate entity;
+  expandWith =
+    expander: entity:
+    if entity.type == filetype.directory then expander (loadDir entity.path) else validate entity;
   expandRecursive = expandWith (mapAttrs (_: expandRecursive));
 
   enumerate = tree: flatten (mapAttrsToList enumerateMapper tree);
-  enumerateMapper = _: entity:
-    if entity ? type -> !(isString entity.type)
-    then enumerate entity
-    else [entity];
+  enumerateMapper =
+    _: entity: if entity ? type -> !(isString entity.type) then enumerate entity else [ entity ];
 
   tree = path: expandRecursive (directory path);
   treeList = path: enumerate (tree path);
@@ -113,7 +104,8 @@ lib: let
   };
 
   include = path: transformers.paths (filters.nix (treeList path));
-in {
+in
+{
   inherit
     directory
     enumerate

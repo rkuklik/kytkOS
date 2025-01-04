@@ -2,14 +2,16 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   extraConfig = {
     gtk-application-prefer-dark-theme = config.stylix.polarity == "dark";
     gtk-decoration-layout = ":minimize,maximize,close";
     gtk-enable-animations = true;
     gtk-primary-button-warps-slider = true;
   };
-in {
+in
+{
   gtk = {
     iconTheme = {
       name = "Adwaita";

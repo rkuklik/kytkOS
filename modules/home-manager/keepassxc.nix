@@ -3,9 +3,9 @@
   lib,
   pkgs,
   ...
-}: let
-  inherit
-    (lib)
+}:
+let
+  inherit (lib)
     isBool
     boolToString
     filterAttrs
@@ -16,20 +16,18 @@
     types
     ;
   cfg = config.programs.keepassxc;
-  filteredNulls =
-    mapAttrs
-    (name: options: filterAttrs (_: value: value != null) options)
-    cfg.settings;
-  modifiedSettings = filterAttrs (_: value: value != {}) filteredNulls;
-  iniGen = pkgs.formats.ini {};
+  filteredNulls = mapAttrs (
+    name: options: filterAttrs (_: value: value != null) options
+  ) cfg.settings;
+  modifiedSettings = filterAttrs (_: value: value != { }) filteredNulls;
+  iniGen = pkgs.formats.ini { };
   iniFile = iniGen.generate "keepassxc.ini" modifiedSettings;
 
-  mkKeePassOpt = type: default:
+  mkKeePassOpt =
+    type: default:
     mkOption {
       description = "Option which defaults to ${
-        if isBool
-        then boolToString default
-        else toString default
+        if isBool then boolToString default else toString default
       }";
       type = types.nullOr type;
       default = null;
@@ -40,14 +38,18 @@
   mkListOpt = mkKeePassOpt (types.listOf types.str);
 
   messaging-host = ".mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json";
-in {
+in
+{
   options.programs.keepassxc = {
     enable = mkEnableOption "KeePassXC";
     settings = {
       General = {
         ConfigVersion = mkOption {
           description = "Config format version";
-          type = types.enum [1 2];
+          type = types.enum [
+            1
+            2
+          ];
           readOnly = true;
           default = 2;
         };
@@ -91,7 +93,10 @@ in {
         ToolButtonStyle = mkNumOpt 0;
         LaunchAtStartup = mkBoolOpt false;
         ShowTrayIcon = mkBoolOpt false;
-        TrayIconAppearance = mkKeePassOpt (types.enum ["monochrome-light" "monochrome-dark"]) "";
+        TrayIconAppearance = mkKeePassOpt (types.enum [
+          "monochrome-light"
+          "monochrome-dark"
+        ]) "";
         MinimizeToTray = mkBoolOpt false;
         MinimizeOnStartup = mkBoolOpt false;
         MinimizeOnClose = mkBoolOpt false;
@@ -178,8 +183,8 @@ in {
         Dashes = mkBoolOpt false;
         Math = mkBoolOpt false;
         Logograms = mkBoolOpt false;
-        AdditionalChars = mkListOpt [];
-        ExcludedChars = mkListOpt [];
+        AdditionalChars = mkListOpt [ ];
+        ExcludedChars = mkListOpt [ ];
         ExcludeAlike = mkBoolOpt true;
         EnsureEvery = mkBoolOpt true;
         Length = mkNumOpt 20;
@@ -198,9 +203,9 @@ in {
   config = mkIf cfg.enable {
     xdg.configFile."keepassxc/keepassxc.ini".source = iniFile;
     home = {
-      packages = [pkgs.keepassxc];
+      packages = [ pkgs.keepassxc ];
       file.${messaging-host}.text = builtins.toJSON {
-        allowed_extensions = ["keepassxc-browser@keepassxc.org"];
+        allowed_extensions = [ "keepassxc-browser@keepassxc.org" ];
         description = "KeePassXC integration with native messaging support";
         name = "org.keepassxc.keepassxc_browser";
         path = lib.getExe' pkgs.keepassxc "keepassxc-proxy";

@@ -3,9 +3,11 @@
   inputs,
   flower,
   ...
-}: let
+}:
+let
   os = config;
-in {
+in
+{
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;

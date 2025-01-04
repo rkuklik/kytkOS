@@ -1,83 +1,84 @@
 {
   description = "kytkOS";
 
-  outputs = {
-    nixpkgs,
-    home-manager,
-    nixos-hardware,
-    sops,
-    disko,
-    ...
-  } @ inputs: let
-    flower = import ./lib.nix nixpkgs.lib;
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      nixos-hardware,
+      sops,
+      disko,
+      ...
+    }@inputs:
+    let
+      flower = import ./lib.nix nixpkgs.lib;
 
-    inherit (flower.fs) include;
+      inherit (flower.fs) include;
 
-    hosts = let
-      inherit (flower.os.systems) linux;
-    in {
-      nixos = {
-        inspiron = {
-          hostname = "inspiron";
-          system = linux.x86_64;
-          systemModules = [
-            nixos-hardware.nixosModules.dell-inspiron-5515
+      hosts =
+        let
+          inherit (flower.os.systems) linux;
+        in
+        {
+          nixos = {
+            inspiron = {
+              hostname = "inspiron";
+              system = linux.x86_64;
+              systemModules = [
+                nixos-hardware.nixosModules.dell-inspiron-5515
+              ];
+            };
+          };
+        };
+
+      platforms = {
+        nixos = {
+          name = "nixos";
+          builder = nixpkgs.lib.nixosSystem;
+          sharedModules = [
+            home-manager.nixosModules.home-manager
+            sops.nixosModules.sops
+            disko.nixosModules.disko
           ];
         };
       };
-    };
 
-    platforms = {
-      nixos = {
-        name = "nixos";
-        builder = nixpkgs.lib.nixosSystem;
-        sharedModules = [
-          home-manager.nixosModules.home-manager
-          sops.nixosModules.sops
-          disko.nixosModules.disko
-        ];
-      };
-    };
+      osbuilder =
+        {
+          name,
+          builder,
+          sharedModules,
+        }:
+        {
+          hostname,
+          system,
+          systemModules,
+        }:
+        let
+          modules =
+            [ ] ++ sharedModules ++ systemModules ++ include ./modules/${name} ++ include ./hosts/${hostname};
+          specialArgs = {
+            inherit
+              hostname
+              inputs
+              system
+              flower
+              ;
+          };
+        in
+        builder {
+          inherit
+            modules
+            specialArgs
+            ;
+        };
 
-    osbuilder = {
-      name,
-      builder,
-      sharedModules,
-    }: {
-      hostname,
-      system,
-      systemModules,
-    }: let
-      modules =
-        []
-        ++ sharedModules
-        ++ systemModules
-        ++ include ./modules/${name}
-        ++ include ./hosts/${hostname};
-      specialArgs = {
-        inherit
-          hostname
-          inputs
-          system
-          flower
-          ;
-      };
+      configurations = name: builtins.mapAttrs (_: osbuilder platforms.${name}) hosts.${name};
     in
-      builder {
-        inherit
-          modules
-          specialArgs
-          ;
-      };
-
-    configurations = name:
-      builtins.mapAttrs
-      (_: osbuilder platforms.${name})
-      hosts.${name};
-  in {
-    inherit flower;
-    nixosConfigurations = configurations "nixos";
-  };
+    {
+      inherit flower;
+      nixosConfigurations = configurations "nixos";
+    };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
