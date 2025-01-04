@@ -11,6 +11,5 @@
       overrideConfig = false;
     };
     programs.firefox.nativeMessagingHosts = [pkgs.kdePackages.plasma-browser-integration];
-    stylix.targets.kde.enable = false;
   };
 }

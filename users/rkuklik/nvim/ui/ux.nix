@@ -5,6 +5,7 @@ in {
     hardtime = {
       enable = true;
       settings = {
+        restriction_mode = "hint";
         disabled_keys = {
           "<Up>" = enabled;
           "<Down>" = enabled;

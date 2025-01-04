@@ -15,16 +15,18 @@ in {
   };
 
   config = {
-    hardware.pulseaudio.enable = false;
     security.rtkit.enable = enable;
-    services.pipewire = {
-      enable = enable;
-      alsa = {
+    services = {
+      pulseaudio.enable = false;
+      pipewire = {
         enable = enable;
-        support32Bit = enable;
+        alsa = {
+          enable = enable;
+          support32Bit = enable;
+        };
+        pulse.enable = enable;
+        jack.enable = enable;
       };
-      pulse.enable = enable;
-      jack.enable = enable;
     };
   };
 }

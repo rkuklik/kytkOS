@@ -39,7 +39,7 @@ in {
       image =
         if cfg.image != null
         then cfg.image
-        else "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Patak/contents/images_dark/3840x2160.png";
+        else "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Mountain/contents/images_dark/5120x2880.png";
       fonts = {
         sansSerif = {
           package = pkgs.noto-fonts;
