@@ -1,14 +1,20 @@
 {
+  config,
   lib,
-  pkgs,
   ...
+
 }:
+let
+  package = name: config.programs.${name}.package;
+  ripgrep = package "ripgrep";
+  fd = package "fd";
+in
 {
   programs.nixvim.plugins.telescope = {
     enable = true;
     settings.defaults = {
       vimgrep_arguments = [
-        (lib.getExe pkgs.ripgrep)
+        (lib.getExe ripgrep)
         "-L"
         "--color=never"
         "--no-heading"
@@ -82,7 +88,7 @@
     };
   };
   programs.nixvim.extraPackages = [
-    pkgs.ripgrep
-    pkgs.fd
+    ripgrep
+    fd
   ];
 }

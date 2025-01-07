@@ -10,7 +10,7 @@
     };
     conform-nvim.settings = {
       formatters_by_ft.nix = {
-        __unkeyed-alejandra = "nixfmt";
+        __unkeyed-nixfmt = "nixfmt";
       };
       formatters = {
         nixfmt.command = lib.getExe pkgs.nixfmt-rfc-style;

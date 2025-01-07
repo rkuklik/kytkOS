@@ -15,9 +15,9 @@ in
   options.flowerbed.languages.python = {
     enable = mkEnableOption "Python";
   };
-  config = mkIf (cfg.enable) {
+  config = {
     home = {
-      packages = [ pkgs.python3 ];
+      packages = mkIf (cfg.enable) [ pkgs.python3 ];
       sessionVariables = {
         PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc";
       };
@@ -25,26 +25,26 @@ in
     xdg.configFile."python/pythonrc".text =
       # python
       ''
-        import sys
+        from sys import argv
 
-        if not hasattr(__builtins__, '__IPYTHON__') and 'bpython' not in sys.argv[0]:
-            import os
-            import atexit
-            import readline
+        if not hasattr(__builtins__, "__IPYTHON__") and "bpython" not in argv[0]:
+            from atexit import register
+            from os import environ
             from pathlib import Path
+            from readline import read_history_file, write_history_file
 
-            if state_home := os.environ.get('XDG_STATE_HOME'):
+            if state_home := environ.get("XDG_STATE_HOME"):
                 state_home = Path(state_home)
             else:
-                state_home = Path.home() / '.local' / 'state'
+                state_home = Path.home() / ".local" / "state"
 
-            history = str(state_home / 'python_history')
+            history = str(state_home / "python_history")
 
             try:
-                readline.read_history_file(history)
+                read_history_file(history)
             except:
                 pass
-            atexit.register(readline.write_history_file, history)
+            register(write_history_file, history)
       '';
   };
 }
