@@ -12,7 +12,7 @@ let
 in
 {
   options.kytkos.desktop.hyprland = {
-    enable = mkEnableOption "KDE Plasma";
+    enable = mkEnableOption "Hyprland";
   };
 
   config = mkIf cfg.enable {

@@ -17,7 +17,7 @@ in
   };
   config = {
     home = {
-      packages = mkIf (cfg.enable) [ pkgs.python3 ];
+      packages = mkIf cfg.enable [ pkgs.python3 ];
       sessionVariables = {
         PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc";
       };

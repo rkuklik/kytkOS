@@ -15,7 +15,7 @@ in
   options.flowerbed.languages.c-cpp = {
     enable = mkEnableOption "C and C++";
   };
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     home = {
       packages = [ pkgs.gcc ];
     };

@@ -15,7 +15,7 @@ in
   options.flowerbed.languages.csharp = {
     enable = mkEnableOption "C#";
   };
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     assertions = [
       {
         assertion = false;

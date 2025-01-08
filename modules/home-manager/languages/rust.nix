@@ -29,14 +29,14 @@ in
     enable = mkEnableOption "Rust";
     sources = mkEnableOption "Rust source code";
   };
-  config = mkIf (cfg.enable) {
-    flowerbed.languages.c-cpp.enable = true;
+  config = {
+    flowerbed.languages.c-cpp.enable = cfg.enable;
     home = {
-      packages = [ bundle ];
+      packages = mkIf cfg.enable [ bundle ];
       sessionVariables = {
         CARGO_HOME = "${dataHome}/cargo";
         RUSTUP_HOME = "${dataHome}/rustup";
-        RUST_SRC_PATH = mkIf cfg.sources "${latest.rust-src}";
+        RUST_SRC_PATH = mkIf (cfg.enable && cfg.sources) "${latest.rust-src}";
       };
     };
   };

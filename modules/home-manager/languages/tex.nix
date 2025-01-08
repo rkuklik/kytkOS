@@ -15,7 +15,7 @@ in
   options.flowerbed.languages.tex = {
     enable = mkEnableOption "LaTex";
   };
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     home = {
       packages = [ pkgs.texliveFull ];
     };

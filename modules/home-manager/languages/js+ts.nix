@@ -25,7 +25,7 @@ in
       default = "deno";
     };
   };
-  config = mkIf (cfg.enable) {
+  config = mkIf cfg.enable {
     home = {
       packages = [ pkgs.${cfg.runtime} ];
     };

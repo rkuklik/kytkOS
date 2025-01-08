@@ -58,7 +58,7 @@ in
           "<C-p>" = mapping "select_prev_item(${select})";
           "<C-b>" = mapping "scroll_docs(-4)";
           "<C-f>" = mapping "scroll_docs(4)";
-          #"<C-Space>" = mapping "complete()";
+          "<C-Space>" = mapping "complete()";
           "<C-e>" = mapping "abort()";
           "<CR>" = mapping "confirm({ select = false })";
           "<S-CR>" =
