@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 let
-  # HACK: lookAndFeelDefaults didn't set this
   kwinrc."org.kde.kdecoration2" = {
     library = "arstotzka";
     theme = "Arstotzka";
@@ -8,12 +10,11 @@ let
     BorderSizeAuto = false;
   };
 in
-# Contains a wallpaper package, a colorscheme file, and a look and feel
-# package which depends on both.
 {
   config = {
     home.packages = [
       pkgs.arstotzka
+      #pkgs.kdePackages.krohnkite
     ];
     programs.plasma = {
       configFile = {

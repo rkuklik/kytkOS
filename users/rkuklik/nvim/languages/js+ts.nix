@@ -1,6 +1,10 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  ...
+}:
 let
-  prettierd.__unkeyed-prettierd = "prettierd";
+  deno.__unkeyed-deno = "deno_fmt";
 in
 {
   programs.nixvim = {
@@ -11,10 +15,19 @@ in
       };
       conform-nvim.settings = {
         formatters_by_ft = {
-          javascript = prettierd;
-          typescript = prettierd;
-          javascriptreact = prettierd;
-          typescriptreact = prettierd;
+          javascript = deno;
+          typescript = deno;
+          javascriptreact = deno;
+          typescriptreact = deno;
+        };
+        formatters.deno_fmt = {
+          command = lib.getExe pkgs.deno;
+          append_args = [
+            "--unstable-component"
+            "--unstable-sql"
+            "--indent-width"
+            "4"
+          ];
         };
       };
     };
