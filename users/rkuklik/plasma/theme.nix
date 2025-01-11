@@ -3,27 +3,23 @@
   ...
 }:
 let
+  name = "arstotzka";
   kwinrc."org.kde.kdecoration2" = {
-    library = "arstotzka";
+    library = name;
     theme = "Arstotzka";
     BorderSize = "Tiny";
     BorderSizeAuto = false;
   };
 in
 {
-  config = {
-    home.packages = [
-      pkgs.arstotzka
-      #pkgs.kdePackages.krohnkite
-    ];
-    programs.plasma = {
-      configFile = {
-        kded5rc.Module-gtkconfig.autoload = {
-          immutable = true;
-          value = false;
-        };
-        inherit kwinrc;
-      };
+  home.packages = [
+    pkgs.arstotzka
+    #pkgs.kdePackages.krohnkite
+  ];
+  programs.plasma = {
+    configFile = {
+      inherit kwinrc;
     };
   };
+  stylix.targets.kde.decorations = name;
 }
