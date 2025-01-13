@@ -1,4 +1,3 @@
-{ config, ... }:
 let
   inherit (builtins)
     map
@@ -57,7 +56,7 @@ in
     plugins = {
       fidget = {
         enable = true;
-        progress.display.progressIcon = {
+        settings.progress.display.progress_icon = {
           pattern = "pipe";
           period = 1;
         };
