@@ -27,6 +27,7 @@
           };
           server.default_settings.rust-analyzer = {
             cargo = { };
+            imports.granularity.group = "preserve";
             procMacro = {
               enable = true;
             };
