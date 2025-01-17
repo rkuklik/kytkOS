@@ -2,7 +2,6 @@
   config,
   lib,
   ...
-
 }:
 let
   package = name: config.programs.${name}.package;

@@ -1,4 +1,7 @@
-{ config, ... }:
+{
+  config,
+  ...
+}:
 let
   extraOptions.PreferredAuthentications = "publickey";
   setEnv.TERM = "linux";

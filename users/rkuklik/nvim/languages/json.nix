@@ -1,8 +1,3 @@
-{
-  lib,
-  pkgs,
-  ...
-}:
 let
   prettierd.__unkeyed-prettierd = "prettierd";
 in
