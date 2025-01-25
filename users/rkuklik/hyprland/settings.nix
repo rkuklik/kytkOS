@@ -9,7 +9,7 @@ let
     flatten
     getExe
     mod
-    mapAttrsToList
+    attrValues
     range
     ;
 
@@ -18,9 +18,8 @@ let
     (id: "${keys.main}, ${toString (mod id 10)}, workspace, ${toString id}")
     (id: "${keys.main} ${keys.ctrl}, ${toString (mod id 10)}, movetoworkspace, ${toString id}")
   ];
-  mkFocusBind = _: def: map (key: "${keys.main}, ${key}, movefocus, ${def.hypr}") def.keys;
-  mkSwapBind =
-    _: def: map (key: "${keys.main} ${keys.alt}, ${key}, swapwindow, ${def.hypr}") def.keys;
+  mkFocusBind = def: map (key: "${keys.main}, ${key}, movefocus, ${def.hypr}") def.keys;
+  mkSwapBind = def: map (key: "${keys.main} ${keys.alt}, ${key}, swapwindow, ${def.hypr}") def.keys;
   direction = {
     left = {
       hypr = "l";
@@ -51,6 +50,7 @@ let
       ];
     };
   };
+  directions = attrValues direction;
 
   keys = {
     shift = "SHIFT";
@@ -76,8 +76,8 @@ let
       key: "${keys.main} ${keys.ctrl} ${keys.shift}, ${key}, movetoworkspace, +1"
     ) direction.right.keys)
     (map (f: map f workspaces) numeric)
-    (mapAttrsToList mkFocusBind direction)
-    (mapAttrsToList mkSwapBind direction)
+    (map mkFocusBind directions)
+    (map mkSwapBind directions)
   ];
   bindm = [
     "${keys.main}, mouse:272, movewindow"
@@ -90,10 +90,10 @@ in
   wayland.windowManager.hyprland = {
     enable = os.kytkos.desktop.hyprland.enable;
     settings = {
-      monitor = ",preferred,auto,auto";
+      monitor = ",preferred,auto,1";
       general = {
-        gaps_in = 2;
-        gaps_out = 4;
+        gaps_in = 3;
+        gaps_out = 6;
         border_size = 2;
       };
       gestures = {
@@ -110,6 +110,9 @@ in
           natural_scroll = true;
         };
       };
+      exec-once = [
+        (getExe config.programs.waybar.package)
+      ];
       inherit
         bind
         bindm
