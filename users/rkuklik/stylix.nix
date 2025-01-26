@@ -28,7 +28,7 @@ in
     colorscheme = mkOption {
       type = types.str;
       description = "Name of colorscheme from `base16-schemes`";
-      default = "catppuccin-mocha";
+      default = "rose-pine";
     };
     image = mkOption {
       type = types.nullOr types.str;

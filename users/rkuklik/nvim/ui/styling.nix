@@ -14,45 +14,27 @@ let
       ctermbg = "none";
     };
   };
+  transparency = map transparent [
+    "Normal"
+    "NormalNC"
+    "NormalFloat"
+    "LineNr"
+    "CursorLineNr"
+    "LineNrAbove"
+    "LineNrBelow"
+    "SignColumn"
+    "WinSeparator"
+  ];
+  underline = map diagnostic [
+    "Error"
+    "Warn"
+    "Info"
+    "Hint"
+  ];
 in
 {
-  stylix.targets.nixvim.enable = false;
   programs.nixvim = {
-    highlight = listToAttrs (
-      map transparent [
-        "Normal"
-        "NormalNC"
-        "NormalFloat"
-        "Pmenu"
-        "StatusLine"
-        "StatusLineNC"
-        "TabLineFill"
-        "WinSeparator"
-        "NonText"
-        "SignColumn"
-        "VertSplit"
-        "Folded"
-      ]
-    );
-    highlightOverride = listToAttrs (
-      map diagnostic [
-        "Error"
-        "Warn"
-        "Info"
-        "Hint"
-      ]
-    );
-    colorschemes.catppuccin = {
-      enable = true;
-      settings = {
-        flavour = "mocha";
-        transparent_background = true;
-        term_colors = true;
-        integrations = {
-          fidget = true;
-        };
-      };
-    };
+    highlightOverride = listToAttrs (transparency ++ underline);
     plugins = {
       fidget = {
         enable = true;
