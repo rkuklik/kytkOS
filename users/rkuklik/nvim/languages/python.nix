@@ -34,7 +34,7 @@ in
       lintersByFt.python = [ "ruff" ];
       linters.ruff.cmd = ruff;
     };
-    dap.extensions.dap-python = {
+    dap-python = {
       enable = true;
     };
   };

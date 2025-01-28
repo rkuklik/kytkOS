@@ -13,6 +13,7 @@
       memtest = true;
     };
     desktop.plasma.enable = true;
+    desktop.hyprland.enable = true;
     audio.enable = true;
     net = {
       enable = true;
