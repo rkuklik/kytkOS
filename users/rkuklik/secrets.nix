@@ -24,6 +24,7 @@ in
       "vpn/expect-it/key.pem"
       "vpn/expect-it/user.pem"
       "vpn/expect-it/ca.pem"
+      "vpn/expect-it/tls.pem"
       "cargo/token"
     ];
   };

@@ -1,5 +1,6 @@
 let
   inherit (builtins)
+    concatStringsSep
     replaceStrings
     ;
 
@@ -65,7 +66,7 @@ let
         eap = "peap;";
         identity = "96388105@cuni.cz";
         password = "$env_a3ab6936_aa8e_47f4_87e5_253b8ca9a17c";
-        password-flags = "0";
+        password-flags = 0;
         phase2-auth = "mschapv2";
       };
     };
@@ -93,31 +94,36 @@ let
     };
     ipv4 = {
       method = "auto";
-      never-default = "true";
     };
     ipv6 = {
-      addr-gen-mode = "stable-privacy";
+      addr-gen-mode = "default";
       method = "disabled";
     };
     proxy = { };
     vpn = {
       auth = "SHA1";
       ca = "/home/rkuklik/.config/sops-nix/secrets/vpn/expect-it/ca.pem";
-      cert = "/home/rkuklik/.config/sops-nix/secrets/vpn/expect-it/cert.pem";
-      cert-pass-flags = "1";
+      cert = "/home/rkuklik/.config/sops-nix/secrets/vpn/expect-it/user.pem";
+      challenge-response-flags = 2;
+      connect-timeout = 10;
       connection-type = "password-tls";
       data-ciphers = "AES-256-GCM:AES-128-GCM:AES-256-CBC";
       dev = "tun";
       key = "/home/rkuklik/.config/sops-nix/secrets/vpn/expect-it/key.pem";
-      password = "$env_8baccb80_b2be_4f5f_a4a9_33a2f74faba9";
-      password-flags = "0";
-      remote = "84.42.196.50:10443:tcp";
+      password-flags = 0;
+      remote = concatStringsSep ", " [
+        "vpn.expect-it.cz:10443:tcp4"
+        "vpn2.expect-it.cz:10443:tcp4"
+      ];
       remote-cert-tls = "server";
       service-type = "org.freedesktop.NetworkManager.openvpn";
-      ta = "/home/rkuklik/.local/share/nm/expect-it/tls-auth.pem";
-      ta-dir = "1";
+      ta = "/home/rkuklik/.config/sops-nix/secrets/vpn/expect-it/tls.pem";
+      ta-dir = 1;
       username = "rkuklik";
       verify-x509-name = "name:vpn.expect-it.cz";
+    };
+    vpn-secrets = {
+      password = "$env_8baccb80_b2be_4f5f_a4a9_33a2f74faba9";
     };
   };
   securedWiFi = map mkSimpleWifi [
