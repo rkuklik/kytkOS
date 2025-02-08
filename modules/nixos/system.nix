@@ -1,7 +1,6 @@
 {
   inputs,
   lib,
-  system,
   ...
 }:
 let
@@ -32,12 +31,6 @@ in
         distroName = "kytkOS";
         distroId = "nixos";
         codeName = "Seed";
-      };
-    };
-    nixpkgs = {
-      hostPlatform = system;
-      config = {
-        allowUnfree = true;
       };
     };
     nix = {

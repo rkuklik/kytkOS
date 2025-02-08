@@ -10,11 +10,12 @@ let
     mkEnableOption
     mkIf
     optionals
+    systems
     ;
   inherit (config.xdg) dataHome;
   cfg = config.flowerbed.languages.rust;
   latest = pkgs.rust-bin.stable.latest;
-  arch = os.nixpkgs.hostPlatform.linuxArch;
+  arch = (systems.elaborate os.nixpkgs.hostPlatform).linuxArch;
   bundle = latest.default.override {
     extensions = optionals cfg.sources [ "rust-src" ];
     targets = [

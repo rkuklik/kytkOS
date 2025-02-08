@@ -3,17 +3,72 @@
 
   outputs =
     {
+      #utils,
       nixpkgs,
       home-manager,
       nixos-hardware,
       sops,
       disko,
+      rust,
+      arstotzka,
       ...
     }@inputs:
     let
       flower = import ./lib.nix nixpkgs.lib;
-
       inherit (flower.fs) include;
+      overlays = flake: flake.overlays.default;
+      overlayFlakes = [
+        rust
+        arstotzka
+      ];
+
+      pkgsbuilder =
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ ] ++ (map import (include ./overlays)) ++ (map overlays overlayFlakes);
+          config = {
+            allowUnfree = true;
+          };
+        };
+      osbuilder =
+        {
+          name,
+          builder,
+          sharedModules,
+        }:
+        {
+          hostname,
+          system,
+          systemModules,
+        }:
+        let
+          pkgs = pkgsbuilder system;
+          inherit (pkgs) lib;
+          modules = lib.flatten [
+            { nixpkgs = { inherit pkgs; }; }
+            sharedModules
+            systemModules
+            (map include [
+              ./modules/${name}
+              ./hosts/${hostname}
+            ])
+          ];
+          specialArgs = {
+            inherit
+              hostname
+              inputs
+              system
+              lib
+              ;
+          };
+        in
+        builder {
+          inherit
+            modules
+            specialArgs
+            ;
+        };
 
       hosts =
         let
@@ -43,46 +98,20 @@
         };
       };
 
-      osbuilder =
-        {
-          name,
-          builder,
-          sharedModules,
-        }:
-        {
-          hostname,
-          system,
-          systemModules,
-        }:
-        let
-          modules =
-            [ ] ++ sharedModules ++ systemModules ++ include ./modules/${name} ++ include ./hosts/${hostname};
-          specialArgs = {
-            inherit
-              hostname
-              inputs
-              system
-              flower
-              ;
-          };
-        in
-        builder {
-          inherit
-            modules
-            specialArgs
-            ;
-        };
-
       configurations = name: builtins.mapAttrs (_: osbuilder platforms.${name}) hosts.${name};
     in
     {
-      inherit flower;
       nixosConfigurations = configurations "nixos";
     };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    arstotzka = {
+      url = "github:rkuklik/arstotzka";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     disko = {
       url = "github:nix-community/disko";
@@ -113,7 +142,7 @@
     };
 
     stylix = {
-      url = "github:rkuklik/stylix";
+      url = "github:danth/stylix";
       inputs = {
         home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";

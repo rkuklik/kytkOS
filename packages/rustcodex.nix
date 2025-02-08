@@ -4,13 +4,11 @@
   rustPlatform,
   installShellFiles,
 }:
-let
+rustPlatform.buildRustPackage rec {
   pname = "rustcodex";
-in
-rustPlatform.buildRustPackage {
-  inherit pname;
   version = "0.0.0";
-  cargoHash = "sha256-1nCaEIzQmd1X0ZbpRxsah6icF+DHP3eDUBKkN+YiRF0=";
+  cargoHash = "sha256-dWaRuXFbJRilQ9dReTlNDZ7+Y3ZTx7bM8C6imcsREoA=";
+  useFetchCargoVendor = true;
   src = pkgs.fetchFromGitHub {
     owner = "rkuklik";
     repo = pname;

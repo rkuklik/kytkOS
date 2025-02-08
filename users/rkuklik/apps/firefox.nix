@@ -80,7 +80,7 @@ in
       id = 0;
       containersForce = true;
       bookmarks = [ ];
-      extensions = with addons; [
+      extensions.packages = with addons; [
         i-dont-care-about-cookies
         ublock-origin
         privacy-badger

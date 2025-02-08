@@ -2,11 +2,8 @@
   programs.plasma.input = {
     keyboard.layouts = [
       {
-        layout = "us";
-      }
-      {
         layout = "cz";
-        variant = "qwerty";
+        variant = "coder";
       }
     ];
     keyboard.numlockOnStartup = "on";

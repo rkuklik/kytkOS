@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  flower,
   ...
 }:
 let
@@ -61,7 +60,7 @@ let
     in
     {
       ${name} = mkIf conf.enable (mkMerge [
-        { imports = flower.fs.include ../../users/${name}; }
+        { imports = lib.flower.fs.include ../../users/${name}; }
         conf.settings
       ]);
     };

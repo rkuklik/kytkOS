@@ -4,7 +4,7 @@
 }:
 let
   name = "arstotzka";
-  kwinrc."org.kde.kdecoration2" = {
+  kwinrc."org.kde.kdecoration3" = {
     library = name;
     theme = "Arstotzka";
     BorderSize = "Tiny";
