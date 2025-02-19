@@ -33,7 +33,12 @@ let
   ];
 in
 {
+  stylix.targets.nixvim.enable = false;
   programs.nixvim = {
+    colorschemes.rose-pine = {
+      enable = true;
+      settings.styles.italic = false;
+    };
     highlightOverride = listToAttrs (transparency ++ underline);
     plugins = {
       fidget = {

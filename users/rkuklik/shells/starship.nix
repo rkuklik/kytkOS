@@ -69,12 +69,17 @@ let
 
   pkg = config.programs.starship.package;
   fileMapper = map (f: "${pkg}/share/starship/presets/${f}.toml");
-  configfile = pkgs.runCommand "starship.toml" { nativeBuildInputs = [ pkgs.yq ]; } ''
-    tomlq -s -t 'reduce .[] as $item ({}; . * $item)' \
-      ${lib.concatStringsSep " " (fileMapper presets)} \
-      ${(pkgs.formats.toml { }).generate "starship.toml" settings} \
-      > $out
-  '';
+  configfile =
+    pkgs.runCommand "starship.toml"
+      {
+        nativeBuildInputs = [ pkgs.yq ];
+      }
+      ''
+        tomlq -s -t 'reduce .[] as $item ({}; . * $item)' \
+          ${lib.concatStringsSep " " (fileMapper presets)} \
+          ${(pkgs.formats.toml { }).generate "starship.toml" settings} \
+          > $out
+      '';
 in
 {
   programs.starship.enable = true;

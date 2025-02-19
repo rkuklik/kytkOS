@@ -33,7 +33,7 @@ in
       size = 24;
     };
     opacity = {
-      terminal = 0.8;
+      terminal = 0.85;
     };
     targets.qt = {
       enable = false;
