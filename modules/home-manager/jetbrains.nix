@@ -25,7 +25,7 @@ let
   rider = mkIf (cfg.rider) {
     home.packages = [ pkgs.jetbrains.rider ];
     flowerbed.languages.csharp = {
-      #enable = true;
+      enable = true;
     };
   };
   pycharm-community = mkIf (cfg.pycharm-community) {

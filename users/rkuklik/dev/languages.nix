@@ -4,6 +4,7 @@
       enable = true;
       sources = true;
     };
+    csharp.enable = true;
     js-ts.enable = true;
     tex.enable = true;
     python.enable = true;
@@ -11,5 +12,6 @@
   flowerbed.jetbrains = {
     rust-rover = true;
     android-studio = true;
+    rider = true;
   };
 }

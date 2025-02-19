@@ -16,17 +16,17 @@ in
   programs.ssh = {
     enable = true;
     matchBlocks = {
-      github = {
+      "github.com" = {
         hostname = "github.com";
         identityFile = identities.github;
         inherit extraOptions;
       };
-      gitea = {
+      "git.fykos.cz" = {
         hostname = "git.fykos.cz";
         identityFile = identities.github;
         inherit extraOptions;
       };
-      gitlab = {
+      "gitlab.expect-it.local" = {
         hostname = "gitlab.expect-it.local";
         identityFile = identities.gitlab;
         inherit extraOptions;
