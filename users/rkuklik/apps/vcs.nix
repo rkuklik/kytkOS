@@ -24,6 +24,9 @@ in
           "::"
         ];
       };
+      git = {
+        subprocess = true;
+      };
     };
   };
 }

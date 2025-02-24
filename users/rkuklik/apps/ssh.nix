@@ -6,10 +6,19 @@ let
   extraOptions.PreferredAuthentications = "publickey";
   setEnv.TERM = "linux";
   getter = _: name: config.sops.secrets.${name}.path;
-  identities = builtins.mapAttrs getter {
-    github = "ssh/rkuklik/github";
-    bigdata = "ssh/expect-it/bigdata";
-    gitlab = "ssh/expect-it/gitlab";
+  paths = builtins.mapAttrs getter;
+  identities = {
+    personal = paths {
+      github = "keys/personal/github";
+    };
+    expect-it = paths {
+      bigdata = "keys/expect-it/bigdata";
+      gitlab = "keys/expect-it/gitlab";
+    };
+    cuni = paths {
+      mff = "keys/cuni/mff";
+      fykos = "keys/cuni/fykos";
+    };
   };
 in
 {
@@ -18,27 +27,30 @@ in
     matchBlocks = {
       "github.com" = {
         hostname = "github.com";
-        identityFile = identities.github;
+        identityFile = identities.personal.github;
         inherit extraOptions;
       };
-      "git.fykos.cz" = {
-        hostname = "git.fykos.cz";
-        identityFile = identities.github;
+      "*.fykos.cz" = {
+        identityFile = identities.cuni.fykos;
+        inherit extraOptions;
+      };
+      "*.mff.cuni.cz" = {
+        identityFile = identities.cuni.mff;
         inherit extraOptions;
       };
       "gitlab.expect-it.local" = {
         hostname = "gitlab.expect-it.local";
-        identityFile = identities.gitlab;
+        identityFile = identities.expect-it.gitlab;
         inherit extraOptions;
       };
       bigdata = {
         hostname = "bigdata.expect-it.local";
-        identityFile = identities.bigdata;
+        identityFile = identities.expect-it.bigdata;
         inherit extraOptions;
       };
       minio = {
         hostname = "192.168.1.206";
-        identityFile = identities.bigdata;
+        identityFile = identities.expect-it.bigdata;
         inherit setEnv;
       };
       synology = {
