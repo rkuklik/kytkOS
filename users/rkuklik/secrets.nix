@@ -18,9 +18,11 @@ in
     defaultSopsFile = ../../secrets/rkuklik.yaml;
     age.keyFile = "${os.users.users.${name}.home}/.config/sops/age/keys.txt";
     secrets = decrypt [
-      "ssh/expect-it/bigdata"
-      "ssh/expect-it/gitlab"
-      "ssh/rkuklik/github"
+      "keys/expect-it/bigdata"
+      "keys/expect-it/gitlab"
+      "keys/personal/github"
+      "keys/cuni/mff"
+      "keys/cuni/fykos"
       "vpn/expect-it/key.pem"
       "vpn/expect-it/user.pem"
       "vpn/expect-it/ca.pem"
