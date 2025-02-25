@@ -84,4 +84,5 @@ in
 {
   programs.starship.enable = true;
   xdg.configFile."starship.toml".source = configfile;
+  stylix.targets.starship.enable = false;
 }

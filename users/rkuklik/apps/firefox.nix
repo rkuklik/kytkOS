@@ -79,7 +79,10 @@ in
     profiles.main = {
       id = 0;
       containersForce = true;
-      bookmarks = [ ];
+      bookmarks = {
+        force = false;
+        settings = [ ];
+      };
       extensions.packages = with addons; [
         i-dont-care-about-cookies
         ublock-origin
@@ -126,13 +129,13 @@ in
         default = "Startpage";
         order = [
           "Startpage"
-          "DuckDuckGo"
-          "Wikipedia (en)"
+          "ddg"
+          "wikipedia"
           "MyNixOS"
           "MDN Web Docs"
           "Lib.rs"
-          "YouTube"
-          "Google"
+          "youtube"
+          "google"
         ];
         engines = {
           "Lib.rs" = {
@@ -231,7 +234,7 @@ in
             ];
             inherit updateInterval;
           };
-          "YouTube" = {
+          "youtube" = {
             urls = [
               {
                 template = "https://www.youtube.com/results?search_query={searchTerms}&page={startPage?}&utm_source=opensearch";
@@ -245,12 +248,13 @@ in
             ];
             inherit updateInterval;
           };
-          "Wikipedia (en)".metaData.alias = "!w";
-          "Google".metaData.alias = "!g";
-          "Bing".metaData.hidden = true;
-          "Amazon".metaData.hidden = true;
+          wikipedia.metaData.alias = "!w";
+          google.metaData.alias = "!g";
+          bing.metaData.hidden = true;
+          amazon.metaData.hidden = true;
         };
       };
     };
   };
+  stylix.targets.firefox.profileNames = [ "main" ];
 }

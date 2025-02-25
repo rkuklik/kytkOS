@@ -25,9 +25,7 @@ in
       ANDROID_HOME = "${dataHome}/android/sdk";
       DOCKER_CONFIG = "${configHome}/docker";
       DOT_SAGE = "${configHome}/sage";
-      GRADLE_USER_HOME = "${dataHome}/gradle";
       NODE_REPL_HISTORY = "${stateHome}/node_repl_history";
-      _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${configHome}/java";
     };
   };
 }

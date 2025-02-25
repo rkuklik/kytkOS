@@ -130,10 +130,7 @@
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs = {
-        home-manager.follows = "home-manager";
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     rust = {

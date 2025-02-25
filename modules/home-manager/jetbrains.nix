@@ -34,6 +34,9 @@ let
       enable = true;
     };
   };
+  idea-community = mkIf (cfg.idea-community) {
+    home.packages = [ jetbrains.idea-community ];
+  };
   android-studio = mkIf (cfg.android-studio) {
     home.packages = [ pkgs.android-studio ];
   };
@@ -43,12 +46,14 @@ in
     rust-rover = mkEnableOption "RustRover";
     rider = mkEnableOption "Rider";
     pycharm-community = mkEnableOption "PyCharm CE";
+    idea-community = mkEnableOption "IntelliJ IDEA";
     android-studio = mkEnableOption "Android Studio";
   };
   config = mkMerge [
     rust-rover
     rider
     pycharm-community
+    idea-community
     android-studio
   ];
 }

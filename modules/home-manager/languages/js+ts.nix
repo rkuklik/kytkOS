@@ -8,6 +8,7 @@ let
   inherit (lib)
     mkOption
     mkEnableOption
+    mkPackageOption
     mkIf
     types
     ;
@@ -24,10 +25,11 @@ in
       ];
       default = "deno";
     };
+    package = mkPackageOption pkgs cfg.runtime { };
   };
   config = mkIf cfg.enable {
     home = {
-      packages = [ pkgs.${cfg.runtime} ];
+      packages = [ cfg.package ];
     };
   };
 }
