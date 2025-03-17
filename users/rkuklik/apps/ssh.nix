@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   ...
 }:
 let
@@ -20,6 +21,10 @@ let
       fykos = "keys/cuni/fykos";
     };
   };
+
+  inherit (lib.hm)
+    dag
+    ;
 in
 {
   programs.ssh = {
@@ -36,7 +41,15 @@ in
       };
       "*.mff.cuni.cz" = {
         identityFile = identities.cuni.mff;
+        user = "kuklikra";
         inherit extraOptions;
+      };
+      "u*.ms.mff.cuni.cz" = dag.entryBefore [ "*.mff.cuni.cz" ] {
+        user = "kuklikra";
+        extraOptions = {
+          PreferredAuthentications = "keyboard-interactive";
+          PubkeyAuthentication = "no";
+        };
       };
       "gitlab.expect-it.local" = {
         hostname = "gitlab.expect-it.local";
