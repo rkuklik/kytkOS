@@ -21,6 +21,7 @@ in
       "keys/expect-it/bigdata"
       "keys/expect-it/gitlab"
       "keys/personal/github"
+      "keys/personal/nolog"
       "keys/cuni/mff"
       "keys/cuni/fykos"
       "vpn/expect-it/key.pem"

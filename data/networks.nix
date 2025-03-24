@@ -229,6 +229,10 @@ let
       name = "A94E59";
       uuid = "0a00ec7d-e2d4-4555-b462-fd56fcb6ebfb";
     }
+    {
+      name = "UPC1218BDB";
+      uuid = "f1648f67-2541-4df1-8425-0e2b774b3fec";
+    }
   ];
 in
 {

@@ -11,6 +11,7 @@ let
   identities = {
     personal = paths {
       github = "keys/personal/github";
+      nolog = "keys/personal/nolog";
     };
     expect-it = paths {
       bigdata = "keys/expect-it/bigdata";
@@ -33,6 +34,10 @@ in
       "github.com" = {
         hostname = "github.com";
         identityFile = identities.personal.github;
+        inherit extraOptions;
+      };
+      "code.nolog.cz" = {
+        identityFile = identities.personal.nolog;
         inherit extraOptions;
       };
       "*.fykos.cz" = {
