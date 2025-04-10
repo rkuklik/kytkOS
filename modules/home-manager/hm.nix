@@ -17,5 +17,9 @@ in
   config = {
     programs.home-manager.enable = true;
     home.stateVersion = lib.mkDefault os.system.stateVersion;
+    nixpkgs = lib.mkForce {
+      config = null;
+      overlays = null;
+    };
   };
 }
