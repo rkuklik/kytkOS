@@ -50,7 +50,7 @@ let
         isNormalUser = true;
         description = conf.name;
         hashedPassword = mkIf (conf.password != null) (conf.password);
-        extraGroups = [ ] ++ optional conf.admin "wheel" ++ optional conf.net "networkmanager";
+        extraGroups = [ "dialout" ] ++ optional conf.admin "wheel" ++ optional conf.net "networkmanager";
       };
     };
   homeuser =

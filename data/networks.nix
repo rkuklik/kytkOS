@@ -233,6 +233,10 @@ let
       name = "UPC1218BDB";
       uuid = "f1648f67-2541-4df1-8425-0e2b774b3fec";
     }
+    {
+      name = "Ap_Krakonos";
+      uuid = "e652c728-2d79-4b56-a8a5-109a20ab67d8";
+    }
   ];
 in
 {
