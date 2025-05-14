@@ -5,10 +5,10 @@
 }:
 {
   programs.nixvim = {
+    dependencies.rust-analyzer.package = pkgs.rust-bin.stable.latest.rust-analyzer;
     plugins = {
       rustaceanvim = {
         enable = true;
-        rustAnalyzerPackage = pkgs.rust-bin.stable.latest.rust-analyzer;
         settings = {
           tools = {
             on_initialized.__raw =

@@ -26,7 +26,7 @@ let
     "magenta"
     "brown"
     "bright-red"
-    "bright-orange"
+    "bright-yellow"
     "bright-green"
     "bright-cyan"
     "bright-blue"

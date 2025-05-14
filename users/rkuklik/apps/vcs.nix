@@ -24,9 +24,9 @@ in
           "::"
         ];
       };
-      git = {
-        subprocess = true;
-      };
+      #git = {
+      #  subprocess = true;
+      #};
     };
   };
 }
