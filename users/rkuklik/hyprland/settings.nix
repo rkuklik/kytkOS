@@ -1,6 +1,7 @@
 {
   os,
   config,
+  pkgs,
   lib,
   ...
 }:
@@ -66,6 +67,7 @@ let
       "${keys.main}, f, fullscreen, 1"
       "${keys.main} ${keys.shift}, f, fullscreen, 0"
       "${keys.main} ${keys.shift}, c, centerwindow"
+      "${keys.alt}, SPACE, exec, ${getExe config.programs.walker.package}"
     ]
     (map (key: "${keys.main} ${keys.ctrl}, ${key}, workspace, -1") direction.left.keys)
     (map (key: "${keys.main} ${keys.ctrl}, ${key}, workspace, +1") direction.right.keys)
@@ -111,7 +113,8 @@ in
         };
       };
       exec-once = [
-        (getExe config.programs.waybar.package)
+        "waybar"
+        "walker --gapplication-service"
       ];
       inherit
         bind
@@ -120,4 +123,7 @@ in
         ;
     };
   };
+  services.hyprpaper.enable = true;
+  services.hypridle.enable = true;
+  programs.hyprlock.enable = true;
 }

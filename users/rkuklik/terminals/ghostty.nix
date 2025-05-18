@@ -8,6 +8,7 @@
     settings = {
       shell-integration-features = "no-cursor";
       cursor-style = "block";
+      cursor-style-blink = false;
       cursor-click-to-move = true;
       mouse-hide-while-typing = true;
     };
