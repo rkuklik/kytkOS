@@ -21,6 +21,8 @@ let
   ];
   mkFocusBind = def: map (key: "${keys.main}, ${key}, movefocus, ${def.hypr}") def.keys;
   mkSwapBind = def: map (key: "${keys.main} ${keys.alt}, ${key}, swapwindow, ${def.hypr}") def.keys;
+  mkWorkBind = dir: key: "${keys.main} ${keys.ctrl}, ${key}, workspace, ${dir}";
+  mkWorkMvBind = dir: key: "${keys.main} ${keys.ctrl} ${keys.shift}, ${key}, movetoworkspace, ${dir}";
   direction = {
     left = {
       hypr = "l";
@@ -61,22 +63,16 @@ let
   };
 
   bind = flatten [
-    [
-      "${keys.main}, Return, exec, ${getExe config.programs.alacritty.package}"
-      "${keys.main}, q, killactive"
-      "${keys.main}, f, fullscreen, 1"
-      "${keys.main} ${keys.shift}, f, fullscreen, 0"
-      "${keys.main} ${keys.shift}, c, centerwindow"
-      "${keys.alt}, SPACE, exec, ${getExe config.programs.walker.package}"
-    ]
-    (map (key: "${keys.main} ${keys.ctrl}, ${key}, workspace, -1") direction.left.keys)
-    (map (key: "${keys.main} ${keys.ctrl}, ${key}, workspace, +1") direction.right.keys)
-    (map (
-      key: "${keys.main} ${keys.ctrl} ${keys.shift}, ${key}, movetoworkspace, -1"
-    ) direction.left.keys)
-    (map (
-      key: "${keys.main} ${keys.ctrl} ${keys.shift}, ${key}, movetoworkspace, +1"
-    ) direction.right.keys)
+    "${keys.main}, Return, exec, ghostty"
+    "${keys.main}, q, killactive"
+    "${keys.main}, f, fullscreen, 1"
+    "${keys.main} ${keys.shift}, f, fullscreen, 0"
+    "${keys.main} ${keys.shift}, c, centerwindow"
+    "${keys.alt}, SPACE, exec, walker --modules applications"
+    (map (mkWorkBind "-1") direction.left.keys)
+    (map (mkWorkBind "+1") direction.right.keys)
+    (map (mkWorkMvBind "-1") direction.left.keys)
+    (map (mkWorkMvBind "1") direction.right.keys)
     (map (f: map f workspaces) numeric)
     (map mkFocusBind directions)
     (map mkSwapBind directions)

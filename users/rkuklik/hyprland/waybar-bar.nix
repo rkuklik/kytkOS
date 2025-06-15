@@ -6,59 +6,19 @@
 }:
 let
   inherit (lib)
-    concatStringsSep
-    concatMapStringsSep
     elemAt
     listToAttrs
     mod
     range
-    toHexString
     ;
-  h = config.lib.stylix.colors.withHashtag;
-  base16 = map (num: "base0${toHexString num}") (range 0 15);
-  named = [
-    "red"
-    "orange"
-    "yellow"
-    "green"
-    "cyan"
-    "blue"
-    "magenta"
-    "brown"
-    "bright-red"
-    "bright-yellow"
-    "bright-green"
-    "bright-cyan"
-    "bright-blue"
-    "bright-magenta"
-  ];
-  csscolors = concatMapStringsSep "\n" (c: "@define-color ${c} ${h.${c}};") (base16 ++ named);
-  inherit (config.stylix)
-    fonts
-    opacity
-    ;
-  styleconfig =
-    # css
-    ''
-      @define-color foreground ${h.base06};
-      @define-color background ${h.base00};
-      * {
-        font-family: "${fonts.sansSerif.name}";
-        font-size: ${toString fonts.sizes.desktop}pt;
-      }
-      window#waybar, tooltip {
-        background: alpha(@base00, ${toString opacity.desktop});
-      }
-    '';
   workspaceNumbers = (range 1 10);
   #workspaceIcons = [ "󰈹" "" "󰈙" "" " " "󱢇" "󰝚" "" "" "" ];
   #icon = index: elemAt workspaceIcons (index - 1);
   icon = index: toString (mod index 10);
 in
 {
-  #home.packages = [ pkgs.fira-code ];
   programs.waybar = {
-    enable = true || config.wayland.windowManager.hyprland.enable;
+    enable = config.wayland.windowManager.hyprland.enable;
     settings = {
       hyprland-topbar = {
         layer = "top";
@@ -72,9 +32,10 @@ in
           "pulseaudio"
           "cpu"
           "memory"
+          "bluetooth"
           "network"
-          "clock"
           "battery"
+          "clock"
         ];
         "hyprland/workspaces" = {
           format = "{icon}";
@@ -96,12 +57,15 @@ in
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
         cpu = {
+          interval = 3;
           format = "{usage}% ";
         };
         memory = {
+          interval = 3;
           format = "{}% ";
         };
         battery = {
+          interval = 1;
           states = {
             good = 95;
             warning = 30;
@@ -116,6 +80,12 @@ in
             ""
           ];
         };
+        bluetooth = {
+          format = " {status}";
+          format-connected = " {device_alias}";
+          format-connected-battery = " {device_alias} {device_battery_percentage}%";
+          on-click = "bzmenu --launcher walker --spaces 3";
+        };
         network = {
           format = "  Wired {icon}";
           format-disconnected = " Unwired";
@@ -128,6 +98,7 @@ in
               "󰤨"
             ];
           };
+          on-click = "iwmenu --launcher walker --spaces 3";
         };
         pulseaudio = {
           format = "{volume}% {icon} / {format_source}";
@@ -146,11 +117,11 @@ in
         };
       };
     };
-    style = concatStringsSep "\n" [
-      csscolors
-      styleconfig
-      (builtins.readFile ./waybar.css)
-    ];
   };
   stylix.targets.waybar.enable = false;
+  home.packages = with pkgs; [
+    pulsemixer
+    iwmenu
+    bzmenu
+  ];
 }

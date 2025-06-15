@@ -11,7 +11,7 @@
     enable = true;
     runAsService = true;
     config = {
-      search.placeholder = "Example";
+      search.placeholder = "Search";
     };
     theme = null;
   };
